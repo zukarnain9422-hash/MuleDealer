@@ -5,7 +5,7 @@ compatibility_date = "2026-11-26"
 [[d1_databases]]
 binding = "DB"
 database_name = "muledealer-db"
-database_id = "REPLACE_WITH_D1_DATABASE_ID"
+database_id = "490a64a2-177b-4edd-8a8c-2ed052ef21b9"
 migrations_dir = "migrations"
 
 [vars]
