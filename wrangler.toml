@@ -10,4 +10,5 @@ migrations_dir = "migrations"
 
 [vars]
 APP_ENV = "production"
-TURNSTILE_SITE_KEY = "REPLACE_WITH_TURNSTILE_SITE_KEY"
+TURNSTILE_SITE_KEY = "0x4AAAAAAGTMln2CquOXIHna"
+TURNSTILE_HOSTNAMES = "muledealer.pages.dev"
