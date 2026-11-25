@@ -6,6 +6,7 @@
   <title>Rundingan — Mangsa Penipuan Scam &amp; Kes Keldai Akaun</title>
 
   <!-- Tailwind CSS via CDN -->
+  <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
   <script src="https://cdn.tailwindcss.com"></script>
 
   <!-- Google Fonts: Inter -->
@@ -834,6 +835,15 @@
                   </label>
                 </div>
 
+                <!-- Pengesahan keselamatan Cloudflare Turnstile -->
+                <div class="pt-2">
+                  <div
+                    class="cf-turnstile"
+                    data-sitekey="0x4AAAAAAGTMln2CquOXIHna"
+                    data-action="contact">
+                  </div>
+                </div>
+
                 <!-- Butang Hantar -->
                 <button
                   type="submit"
@@ -1290,15 +1300,9 @@
         return polaSensitif.test(teks);
       }
 
-      function janaKodRujukan() {
-        const tahun = new Date().getFullYear();
-        const rawak = Math.floor(1000 + Math.random() * 9000);
-        return `RND-${tahun}-${rawak}`;
-      }
-
       let teksRujukanUntukDisalin = '';
 
-      form?.addEventListener('submit', (e) => {
+      form?.addEventListener('submit', async (e) => {
         e.preventDefault();
 
         const kategoriDipilih = document.querySelector('input[name="kategoriKes"]:checked')?.value || '';
@@ -1311,76 +1315,162 @@
         const akujanjiChecked = Boolean(document.getElementById('akujanji-checkbox')?.checked);
 
         const senaraiRalat = [];
+
         if (!kategoriDipilih) senaraiRalat.push('Sila pilih kategori kes.');
-        if (!namaVal) senaraiRalat.push('Sila masukkan nama samaran atau nama penuh.');
-        if (!hubunganVal) senaraiRalat.push('Sila masukkan nombor telefon/WhatsApp atau e-mel.');
-        if (!tarikhVal) senaraiRalat.push('Sila pilih tarikh kejadian atau bila mula disedari.');
+        if (namaVal.length < 2) senaraiRalat.push('Sila masukkan nama atau nama samaran.');
+        if (hubunganVal.length < 5) senaraiRalat.push('Sila masukkan maklumat hubungan yang sah.');
+        if (!tarikhVal) senaraiRalat.push('Sila pilih tarikh kejadian.');
         if (!modVal) senaraiRalat.push('Sila pilih mod rundingan.');
-        if (!slotDipilih) senaraiRalat.push('Sila pilih slot masa pilihan.');
-        if (!ringkasanVal || ringkasanVal.length < 15) {
-          senaraiRalat.push('Sila tulis ringkasan kes secara umum (sekurang-kurangnya 15 aksara).');
+        if (!slotDipilih) senaraiRalat.push('Sila pilih slot masa.');
+
+        if (ringkasanVal.length < 15) {
+          senaraiRalat.push('Ringkasan kes mestilah sekurang-kurangnya 15 aksara.');
         } else if (mengandungiMaklumatSensitif(ringkasanVal)) {
-          senaraiRalat.push('Keselamatan: Jangan sebut atau masukkan perkataan berkaitan kata laluan, PIN, atau TAC/OTP dalam ringkasan.');
-        }
-        if (!akujanjiChecked) {
-          senaraiRalat.push('Sila tandakan kotak pengesahan kerahsiaan dan keselamatan sebelum menghantar.');
+          senaraiRalat.push('Jangan masukkan kata laluan, PIN atau TAC/OTP.');
         }
 
-        if (senaraiRalat.length > 0 && errorBox && errorList) {
-          errorList.innerHTML = senaraiRalat.map((item) => `<li>${item}</li>`).join('');
-          errorBox.classList.remove('hidden');
-          errorBox.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        if (!akujanjiChecked) {
+          senaraiRalat.push('Sila tandakan persetujuan keselamatan.');
+        }
+
+        if (senaraiRalat.length > 0) {
+          if (errorList) {
+            errorList.replaceChildren();
+            senaraiRalat.forEach((mesej) => {
+              const li = document.createElement('li');
+              li.textContent = mesej;
+              errorList.appendChild(li);
+            });
+          }
+
+          errorBox?.classList.remove('hidden');
+          errorBox?.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
           return;
         }
 
+        const turnstileToken =
+          document.querySelector('[name="cf-turnstile-response"]')?.value || '';
+
+        if (!turnstileToken) {
+          if (errorList) {
+            errorList.replaceChildren();
+            const li = document.createElement('li');
+            li.textContent = 'Sila lengkapkan pengesahan keselamatan Cloudflare.';
+            errorList.appendChild(li);
+          }
+
+          errorBox?.classList.remove('hidden');
+          return;
+        }
+
+        const submitBtn = form.querySelector('button[type="submit"]');
+        const submitLabel = submitBtn?.querySelector('span');
+        const labelAsal = submitLabel?.textContent || 'Hantar Permohonan Rundingan';
+
+        if (submitBtn) submitBtn.disabled = true;
+        if (submitLabel) submitLabel.textContent = 'Sedang menghantar...';
+
         errorBox?.classList.add('hidden');
 
-        const kodRujukan = janaKodRujukan();
-        if (refKodSesi) refKodSesi.textContent = kodRujukan;
+        try {
+          const response = await fetch('/api/submit', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+              category: kategoriDipilih,
+              displayName: namaVal,
+              contact: hubunganVal,
+              incidentDate: tarikhVal,
+              consultationMode: modVal,
+              preferredSlot: slotDipilih,
+              summary: ringkasanVal,
+              consent: akujanjiChecked,
+              turnstileToken: turnstileToken
+            })
+          });
 
-        const medanRingkasan = [
-          { label: 'Kategori Kes', nilai: kategoriDipilih },
-          { label: 'Nama / Samaran', nilai: namaVal },
-          { label: 'Hubungan', nilai: hubunganVal },
-          { label: 'Tarikh Kejadian', nilai: tarikhVal },
-          { label: 'Mod Rundingan', nilai: modVal },
-          { label: 'Slot Masa Pilihan', nilai: slotDipilih },
-        ];
+          const result = await response.json();
 
-        if (refButiranSenarai) {
-          refButiranSenarai.innerHTML = medanRingkasan
-            .map(
-              (m) => `
-              <div class="bg-slate-50 rounded-xl p-3 border border-slate-200/70">
-                <dt class="text-xs text-slate-500 font-medium">${m.label}</dt>
-                <dd class="text-xs sm:text-sm font-semibold text-navy-900 mt-0.5 break-words">${m.nilai}</dd>
-              </div>
-            `
-            )
-            .join('');
+          if (!response.ok || result.ok !== true) {
+            throw new Error(result.error || 'Permohonan gagal dihantar.');
+          }
+
+          const kodRujukan = result.referenceCode;
+
+          if (refKodSesi) refKodSesi.textContent = kodRujukan;
+
+          const medanRingkasan = [
+            { label: 'Kategori Kes', nilai: kategoriDipilih },
+            { label: 'Nama / Samaran', nilai: namaVal },
+            { label: 'Hubungan', nilai: hubunganVal },
+            { label: 'Tarikh Kejadian', nilai: tarikhVal },
+            { label: 'Mod Rundingan', nilai: modVal },
+            { label: 'Slot Masa Pilihan', nilai: slotDipilih }
+          ];
+
+          if (refButiranSenarai) {
+            refButiranSenarai.replaceChildren();
+
+            medanRingkasan.forEach((m) => {
+              const wrapper = document.createElement('div');
+              wrapper.className = 'bg-slate-50 rounded-xl p-3 border border-slate-200/70';
+
+              const dt = document.createElement('dt');
+              dt.className = 'text-xs text-slate-500 font-medium';
+              dt.textContent = m.label;
+
+              const dd = document.createElement('dd');
+              dd.className = 'text-xs sm:text-sm font-semibold text-navy-900 mt-0.5 break-words';
+              dd.textContent = m.nilai;
+
+              wrapper.append(dt, dd);
+              refButiranSenarai.appendChild(wrapper);
+            });
+          }
+
+          if (refRingkasanTeks) {
+            refRingkasanTeks.textContent = ringkasanVal;
+          }
+
+          teksRujukanUntukDisalin = [
+            `NO. RUJUKAN SESI: ${kodRujukan}`,
+            `Kategori Kes: ${kategoriDipilih}`,
+            `Nama / Samaran: ${namaVal}`,
+            `Hubungan: ${hubunganVal}`,
+            `Tarikh Kejadian: ${tarikhVal}`,
+            `Mod Rundingan: ${modVal}`,
+            `Slot Masa: ${slotDipilih}`,
+            `Ringkasan Kes: ${ringkasanVal}`
+          ].join('\n');
+
+          if (salinLabel) {
+            salinLabel.textContent = 'Salin Ringkasan Rujukan';
+          }
+
+          form.classList.add('hidden');
+          pengesahanBox?.classList.remove('hidden');
+          pengesahanBox?.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+
+        } catch (error) {
+          if (errorList) {
+            errorList.replaceChildren();
+            const li = document.createElement('li');
+            li.textContent = error.message || 'Ralat berlaku. Sila cuba semula.';
+            errorList.appendChild(li);
+          }
+
+          errorBox?.classList.remove('hidden');
+          errorBox?.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+
+          if (window.turnstile) {
+            window.turnstile.reset();
+          }
+        } finally {
+          if (submitBtn) submitBtn.disabled = false;
+          if (submitLabel) submitLabel.textContent = labelAsal;
         }
-
-        if (refRingkasanTeks) {
-          refRingkasanTeks.textContent = ringkasanVal;
-        }
-
-        teksRujukanUntukDisalin = [
-          `NO. RUJUKAN SESI: ${kodRujukan}`,
-          `Kategori Kes: ${kategoriDipilih}`,
-          `Nama / Samaran: ${namaVal}`,
-          `Hubungan: ${hubunganVal}`,
-          `Tarikh Kejadian: ${tarikhVal}`,
-          `Mod Rundingan: ${modVal}`,
-          `Slot Masa: ${slotDipilih}`,
-          `Ringkasan Kes: ${ringkasanVal}`,
-        ].join('\n');
-
-        if (salinLabel) {
-          salinLabel.textContent = 'Salin Ringkasan Rujukan';
-        }
-
-        pengesahanBox?.classList.remove('hidden');
-        pengesahanBox?.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
       });
 
       // Salin ringkasan rujukan ke papan klip menggunakan execCommand untuk keserasian iFrame
@@ -1411,6 +1501,10 @@
       // Buat permohonan baharu
       tempahSemulaBtn?.addEventListener('click', () => {
         form?.reset();
+        form?.classList.remove('hidden');
+        if (window.turnstile) {
+          window.turnstile.reset();
+        }
         kemasKiniGayaRadio();
         pengesahanBox?.classList.add('hidden');
         errorBox?.classList.add('hidden');
