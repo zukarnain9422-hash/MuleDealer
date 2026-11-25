@@ -1,0 +1,1436 @@
+<!DOCTYPE html>
+<html lang="ms" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Rundingan — Mangsa Penipuan Scam &amp; Kes Keldai Akaun</title>
+
+  <!-- Tailwind CSS via CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Google Fonts: Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+
+  <!-- Konfigurasi Tema Profesional Tailwind -->
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'system-ui', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'sans-serif'],
+          },
+          colors: {
+            navy: {
+              950: '#081726',
+              900: '#0F2942',
+              800: '#1E3A5F',
+              700: '#264B78',
+            },
+            aksen: {
+              600: '#2563EB',
+              500: '#0284C7',
+              400: '#38BDF8',
+              50: '#EFF6FF',
+            },
+          },
+          boxShadow: {
+            'kad': '0 4px 20px -2px rgba(15, 41, 66, 0.06), 0 2px 6px -1px rgba(15, 41, 66, 0.04)',
+            'kad-hover': '0 12px 28px -4px rgba(15, 41, 66, 0.11), 0 4px 10px -2px rgba(15, 41, 66, 0.06)',
+          },
+        },
+      },
+    };
+  </script>
+
+  <style>
+    /* Gaya tambahan minimum untuk transisi akordion dan aksesibiliti */
+    .accordion-content {
+      display: grid;
+      grid-template-rows: 0fr;
+      transition: grid-template-rows 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .accordion-item.is-open .accordion-content {
+      grid-template-rows: 1fr;
+    }
+    .accordion-inner {
+      overflow: hidden;
+    }
+    .accordion-chevron {
+      transition: transform 0.25s ease;
+    }
+    .accordion-item.is-open .accordion-chevron {
+      transform: rotate(180deg);
+    }
+  </style>
+</head>
+<body class="bg-slate-50 text-slate-800 font-sans antialiased selection:bg-aksen-600 selection:text-white">
+
+  <!-- =====================================================================
+       1. HEADER / NAVIGASI ATAS
+       ===================================================================== -->
+  <header class="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-slate-200/80">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-16 lg:h-20 gap-4">
+
+        <!-- Logo / Jenama -->
+        <a href="#" class="flex items-center gap-3 group min-w-0">
+          <div class="w-10 h-10 sm:w-11 sm:h-11 rounded-xl bg-navy-900 text-white flex items-center justify-center shrink-0 shadow-sm group-hover:bg-navy-800 transition-colors">
+            <!-- Ikon Perisai Profesional -->
+            <svg class="w-5 h-5 sm:w-6 sm:h-6 text-aksen-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75m-3-7.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285z" />
+            </svg>
+          </div>
+          <div class="truncate">
+            <span class="block text-sm sm:text-base font-bold text-navy-900 tracking-tight truncate">
+              Pusat Rundingan &amp; Advokasi Keldai Akaun
+            </span>
+            <span class="hidden sm:block text-xs text-slate-500 font-medium truncate">
+              Sokongan Mangsa Penipuan Scam &amp; Isu Akaun Disekat
+            </span>
+          </div>
+        </a>
+
+        <!-- Pautan Navigasi Desktop -->
+        <nav aria-label="Navigasi Utama" class="hidden lg:flex items-center gap-6 text-sm font-medium text-slate-600">
+          <a href="#tentang" class="hover:text-navy-900 py-2 transition-colors">Tentang</a>
+          <a href="#jenis-kes" class="hover:text-navy-900 py-2 transition-colors">Jenis Kes</a>
+          <a href="#langkah-segera" class="hover:text-navy-900 py-2 transition-colors">Langkah Segera</a>
+          <a href="#borang-rundingan" class="hover:text-navy-900 py-2 transition-colors">Borang Rundingan</a>
+          <a href="#soalan-lazim" class="hover:text-navy-900 py-2 transition-colors">Soalan Lazim</a>
+        </nav>
+
+        <!-- Butang CTA Utama + Butang Menu Mudah Alih -->
+        <div class="flex items-center gap-2.5 shrink-0">
+          <a href="#borang-rundingan" class="hidden sm:inline-flex items-center justify-center px-4 py-2.5 rounded-xl text-sm font-semibold text-white bg-navy-900 hover:bg-navy-800 active:scale-[0.99] transition-all shadow-sm">
+            Tempah Rundingan
+          </a>
+
+          <button
+            id="mobile-menu-btn"
+            type="button"
+            aria-label="Buka atau tutup menu navigasi"
+            aria-expanded="false"
+            aria-controls="mobile-menu"
+            class="lg:hidden inline-flex items-center justify-center p-2.5 rounded-xl text-slate-700 hover:text-navy-900 hover:bg-slate-100 transition-colors"
+          >
+            <svg id="icon-menu-open" class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+            </svg>
+            <svg id="icon-menu-close" class="w-6 h-6 hidden" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          </button>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Menu Dropdown Mudah Alih -->
+    <div id="mobile-menu" class="lg:hidden hidden border-t border-slate-100 bg-white">
+      <div class="px-4 py-4 space-y-1">
+        <a href="#tentang" class="mobile-nav-link block px-3.5 py-2.5 rounded-xl text-sm font-medium text-slate-700 hover:bg-slate-50 hover:text-navy-900">Tentang</a>
+        <a href="#jenis-kes" class="mobile-nav-link block px-3.5 py-2.5 rounded-xl text-sm font-medium text-slate-700 hover:bg-slate-50 hover:text-navy-900">Jenis Kes</a>
+        <a href="#langkah-segera" class="mobile-nav-link block px-3.5 py-2.5 rounded-xl text-sm font-medium text-slate-700 hover:bg-slate-50 hover:text-navy-900">Langkah Segera</a>
+        <a href="#borang-rundingan" class="mobile-nav-link block px-3.5 py-2.5 rounded-xl text-sm font-medium text-slate-700 hover:bg-slate-50 hover:text-navy-900">Borang Rundingan</a>
+        <a href="#soalan-lazim" class="mobile-nav-link block px-3.5 py-2.5 rounded-xl text-sm font-medium text-slate-700 hover:bg-slate-50 hover:text-navy-900">Soalan Lazim</a>
+        <div class="pt-2">
+          <a href="#borang-rundingan" class="mobile-nav-link w-full inline-flex items-center justify-center px-4 py-3 rounded-xl text-sm font-semibold text-white bg-navy-900 hover:bg-navy-800 transition-colors">
+            Tempah Rundingan
+          </a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+
+    <!-- =====================================================================
+         2. HERO SECTION
+         ===================================================================== -->
+    <section id="tentang" class="relative overflow-hidden bg-gradient-to-b from-navy-900 via-navy-800 to-navy-900 text-white pt-12 pb-16 sm:pt-16 sm:pb-20 lg:pt-20 lg:pb-24">
+      <!-- Hiasan Latar Belakang Halus -->
+      <div class="absolute inset-0 pointer-events-none opacity-20" aria-hidden="true">
+        <div class="absolute -top-24 -right-24 w-96 h-96 rounded-full bg-aksen-500 blur-3xl"></div>
+        <div class="absolute bottom-0 -left-24 w-80 h-80 rounded-full bg-aksen-400 blur-3xl"></div>
+      </div>
+
+      <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-center">
+
+          <!-- Kolum Kiri: Mesej Utama & CTA -->
+          <div class="lg:col-span-7 space-y-6">
+            <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/10 border border-white/15 text-aksen-400 text-xs sm:text-sm font-medium">
+              <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
+              Khidmat Rundingan Berstruktur, Sulit &amp; Berempati
+            </div>
+
+            <h1 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight leading-[1.15] text-white">
+              Bantuan Rundingan Mangsa Penipuan Scam &amp; Kes Keldai Akaun
+            </h1>
+
+            <p class="text-base sm:text-lg text-slate-200 leading-relaxed max-w-2xl">
+              Apabila dana lesap akibat penipuan atau akaun bank anda disekat secara mengejut kerana dikaitkan dengan transaksi pihak ketiga, langkah pertama yang tenang dan tepat amat penting. Kami membantu menyusun <strong class="text-white font-semibold">sokongan dokumentasi</strong>, menjelaskan <strong class="text-white font-semibold">hak serta implikasi kes</strong>, dan memberi <strong class="text-white font-semibold">panduan tindakan awal</strong> secara tersusun tanpa penghakiman.
+            </p>
+
+            <!-- Dua Butang CTA -->
+            <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-3.5 pt-2">
+              <a
+                href="#borang-rundingan"
+                class="inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl text-sm sm:text-base font-semibold bg-aksen-600 hover:bg-aksen-500 text-white shadow-lg shadow-aksen-600/25 transition-all"
+              >
+                <span>Mula Sesi Rundingan</span>
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24" aria-hidden="true">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
+                </svg>
+              </a>
+
+              <a
+                href="#langkah-segera"
+                class="inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl text-sm sm:text-base font-semibold bg-white/10 hover:bg-white/15 text-white border border-white/20 backdrop-blur-sm transition-all"
+              >
+                <svg class="w-4 h-4 text-aksen-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+                <span>Semak Langkah Segera</span>
+              </a>
+            </div>
+
+            <!-- Nota Keselamatan Ringkas -->
+            <p class="text-xs text-slate-300/90 flex items-center gap-2 pt-1">
+              <svg class="w-4 h-4 text-aksen-400 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M16.5 10.5V6.75a4.5 4.5 0 10-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H6.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z" />
+              </svg>
+              <span>Kami tidak pernah meminta kata laluan perbankan, PIN, atau kod TAC/OTP anda.</span>
+            </p>
+          </div>
+
+          <!-- Kolum Kanan: Kad Ringkasan Kepercayaan & Fokus -->
+          <div class="lg:col-span-5">
+            <div class="bg-white text-slate-800 rounded-2xl p-6 sm:p-7 shadow-2xl border border-slate-100 space-y-5">
+              <div class="flex items-center justify-between border-b border-slate-100 pb-4">
+                <div>
+                  <span class="text-xs font-semibold uppercase tracking-wider text-aksen-600">Ringkasan Khidmat</span>
+                  <h2 class="text-lg font-bold text-navy-900 mt-0.5">Kerangka Sokongan Rundingan</h2>
+                </div>
+                <span class="px-2.5 py-1 rounded-lg text-xs font-semibold bg-aksen-50 text-aksen-600">
+                  Bahasa Melayu
+                </span>
+              </div>
+
+              <!-- 3 Kad Maklumat Kepercayaan -->
+              <div class="space-y-4">
+                <div class="flex items-start gap-3.5 p-3.5 rounded-xl bg-slate-50 border border-slate-200/60">
+                  <div class="w-10 h-10 rounded-lg bg-navy-900 text-aksen-400 flex items-center justify-center shrink-0 font-bold text-sm">
+                    01
+                  </div>
+                  <div>
+                    <h3 class="text-sm font-bold text-navy-900">Kerahsiaan Terjamin</h3>
+                    <p class="text-xs sm:text-sm text-slate-600 mt-0.5 leading-relaxed">
+                      Maklumat kronologi dan butiran rundingan anda dikendalikan secara sulit dan penuh hormat.
+                    </p>
+                  </div>
+                </div>
+
+                <div class="flex items-start gap-3.5 p-3.5 rounded-xl bg-slate-50 border border-slate-200/60">
+                  <div class="w-10 h-10 rounded-lg bg-navy-900 text-aksen-400 flex items-center justify-center shrink-0 font-bold text-sm">
+                    02
+                  </div>
+                  <div>
+                    <h3 class="text-sm font-bold text-navy-900">Panduan Berstruktur</h3>
+                    <p class="text-xs sm:text-sm text-slate-600 mt-0.5 leading-relaxed">
+                      Penyusunan garis masa kejadian, bukti transaksi, serta senarai semak tindakan yang jelas dan praktikal.
+                    </p>
+                  </div>
+                </div>
+
+                <div class="flex items-start gap-3.5 p-3.5 rounded-xl bg-slate-50 border border-slate-200/60">
+                  <div class="w-10 h-10 rounded-lg bg-navy-900 text-aksen-400 flex items-center justify-center shrink-0 font-bold text-sm">
+                    03
+                  </div>
+                  <div>
+                    <h3 class="text-sm font-bold text-navy-900">Sokongan Kes Sivil &amp; Penyiasatan</h3>
+                    <p class="text-xs sm:text-sm text-slate-600 mt-0.5 leading-relaxed">
+                      Penerangan awal mengenai prosedur pelaporan, urusan institusi kewangan, dan hala tuju kes sivil atau penyiasatan.
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              <div class="pt-2 border-t border-slate-100 flex items-center justify-between text-xs text-slate-500">
+                <span>Sesi: Dalam Talian, Telefon &amp; Bersemuka</span>
+                <a href="#borang-rundingan" class="font-semibold text-aksen-600 hover:underline">Jadualkan →</a>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- =====================================================================
+         3. BAHAGIAN FOKUS KES ("JENIS SITUASI YANG DIRUNDINGKAN")
+         ===================================================================== -->
+    <section id="jenis-kes" class="py-16 sm:py-20 lg:py-24 bg-white border-b border-slate-200/70">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+
+        <!-- Tajuk Bahagian -->
+        <div class="max-w-3xl mx-auto text-center mb-10 sm:mb-12">
+          <span class="inline-block px-3 py-1 rounded-full text-xs font-semibold uppercase tracking-wider bg-aksen-50 text-aksen-600 mb-3">
+            Fokus Rundingan
+          </span>
+          <h2 class="text-2xl sm:text-3xl lg:text-4xl font-bold text-navy-900 tracking-tight">
+            Jenis Situasi yang Dirundingkan
+          </h2>
+          <p class="mt-3 text-sm sm:text-base text-slate-600 leading-relaxed">
+            Setiap situasi mempunyai langkah dokumentasi dan implikasi berbeza. Pilih kategori di bawah untuk melihat perbezaan serta isu utama yang sering dihadapi.
+          </p>
+        </div>
+
+        <!-- Tab Interaktif -->
+        <div class="flex flex-wrap items-center justify-center gap-2.5 sm:gap-3 mb-8" role="tablist" aria-label="Kategori Jenis Kes">
+          <button
+            type="button"
+            role="tab"
+            id="tab-semua"
+            aria-selected="true"
+            data-tab="semua"
+            class="case-tab px-4 sm:px-5 py-2.5 rounded-xl text-xs sm:text-sm font-semibold transition-all bg-navy-900 text-white shadow-sm"
+          >
+            Semua Situasi
+          </button>
+          <button
+            type="button"
+            role="tab"
+            id="tab-scam"
+            aria-selected="false"
+            data-tab="scam"
+            class="case-tab px-4 sm:px-5 py-2.5 rounded-xl text-xs sm:text-sm font-semibold transition-all bg-slate-100 text-slate-700 hover:bg-slate-200"
+          >
+            Mangsa Penipuan Scam
+          </button>
+          <button
+            type="button"
+            role="tab"
+            id="tab-keldai"
+            aria-selected="false"
+            data-tab="keldai"
+            class="case-tab px-4 sm:px-5 py-2.5 rounded-xl text-xs sm:text-sm font-semibold transition-all bg-slate-100 text-slate-700 hover:bg-slate-200"
+          >
+            Kes Keldai Akaun (Mule Account)
+          </button>
+        </div>
+
+        <!-- Kad Perbandingan / Fokus Kes -->
+        <div id="case-cards-grid" class="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8">
+
+          <!-- Kad 1: Mangsa Penipuan Scam -->
+          <article id="card-scam" class="bg-slate-50/80 rounded-2xl p-6 sm:p-8 border border-slate-200/90 shadow-kad hover:shadow-kad-hover transition-all flex flex-col justify-between">
+            <div>
+              <div class="flex items-start justify-between gap-4 mb-5">
+                <div class="flex items-center gap-3.5">
+                  <div class="w-12 h-12 rounded-xl bg-navy-900 text-white flex items-center justify-center shrink-0">
+                    <svg class="w-6 h-6 text-aksen-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126zM12 15.75h.007v.008H12v-.008z" />
+                    </svg>
+                  </div>
+                  <div>
+                    <span class="text-xs font-semibold text-aksen-600 uppercase tracking-wider">Kategori 01</span>
+                    <h3 class="text-xl font-bold text-navy-900">Mangsa Penipuan Scam</h3>
+                  </div>
+                </div>
+                <span class="px-2.5 py-1 rounded-lg text-xs font-medium bg-white border border-slate-200 text-slate-600 shrink-0">
+                  Kerugian Dana
+                </span>
+              </div>
+
+              <p class="text-sm sm:text-base text-slate-600 leading-relaxed mb-5">
+                Tertipu oleh taktik manipulasi kewangan, penyamaran identiti, atau pautan/platform palsu yang menyebabkan pemindahan wang atau pendedahan maklumat tanpa disedari.
+              </p>
+
+              <h4 class="text-xs font-bold uppercase tracking-wider text-navy-800 mb-3">Bentuk Penipuan &amp; Isu Utama:</h4>
+              <ul class="space-y-2.5 text-sm text-slate-700">
+                <li class="flex items-start gap-2.5">
+                  <svg class="w-4 h-4 text-aksen-600 mt-1 shrink-0" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" aria-hidden="true">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5" />
+                  </svg>
+                  <span><strong>Scam Pelaburan:</strong> Janji pulangan tinggi luar biasa, kumpulan sembang pelaburan palsu, atau aplikasi dagangan tidak berlesen.</span>
+                </li>
+                <li class="flex items-start gap-2.5">
+                  <svg class="w-4 h-4 text-aksen-600 mt-1 shrink-0" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" aria-hidden="true">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5" />
+                  </svg>
+                  <span><strong>Parcel / Panggilan Palsu:</strong> Penyamaran pihak berkuasa, kurier, atau institusi dengan tekanan masa agar dana dipindahkan segera.</span>
+                </li>
+                <li class="flex items-start gap-2.5">
+                  <svg class="w-4 h-4 text-aksen-600 mt-1 shrink-0" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" aria-hidden="true">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5" />
+                  </svg>
+                  <span><strong>Pinjaman Tidak Wujud &amp; E-Dagang:</strong> Bayaran pendahuluan/cukai palsu untuk pinjaman atau pembelian barangan yang tidak pernah dihantar.</span>
+                </li>
+                <li class="flex items-start gap-2.5">
+                  <svg class="w-4 h-4 text-aksen-600 mt-1 shrink-0" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" aria-hidden="true">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5" />
+                  </svg>
+                  <span><strong>Pemindahan Dana Tanpa Kebenaran:</strong> Pengambilalihan akses akaun atau transaksi mencurigakan yang perlu disekat dan direkodkan segera.</span>
+                </li>
+              </ul>
+            </div>
+
+            <div class="mt-6 pt-4 border-t border-slate-200/80 flex items-center justify-between gap-4">
+              <span class="text-xs text-slate-500">Fokus: Jejak transaksi, laporan &amp; kronologi</span>
+              <a href="#borang-rundingan" onclick="pilihKategoriBorang('Mangsa Scam')" class="text-xs sm:text-sm font-semibold text-aksen-600 hover:text-navy-900 transition-colors">
+                Rundingan Kes Scam →
+              </a>
+            </div>
+          </article>
+
+          <!-- Kad 2: Kes Keldai Akaun (Mule Account) -->
+          <article id="card-keldai" class="bg-slate-50/80 rounded-2xl p-6 sm:p-8 border border-slate-200/90 shadow-kad hover:shadow-kad-hover transition-all flex flex-col justify-between">
+            <div>
+              <div class="flex items-start justify-between gap-4 mb-5">
+                <div class="flex items-center gap-3.5">
+                  <div class="w-12 h-12 rounded-xl bg-aksen-600 text-white flex items-center justify-center shrink-0">
+                    <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 8.25h19.5M2.25 9h19.5m-16.5 5.25h6m-6 2.25h3m-3.75 3h15a2.25 2.25 0 002.25-2.25V6.75A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25v10.5A2.25 2.25 0 004.5 19.5z" />
+                    </svg>
+                  </div>
+                  <div>
+                    <span class="text-xs font-semibold text-aksen-600 uppercase tracking-wider">Kategori 02</span>
+                    <h3 class="text-xl font-bold text-navy-900">Kes Keldai Akaun (Mule Account)</h3>
+                  </div>
+                </div>
+                <span class="px-2.5 py-1 rounded-lg text-xs font-medium bg-white border border-slate-200 text-slate-600 shrink-0">
+                  Akaun Disekat / Siasatan
+                </span>
+              </div>
+
+              <p class="text-sm sm:text-base text-slate-600 leading-relaxed mb-5">
+                Situasi apabila akaun bank atau e-dompet milik sendiri digunakan untuk menerima, menyalurkan, atau mengeluarkan dana penipuan — sama ada kerana diperdaya atau kelalaian.
+              </p>
+
+              <h4 class="text-xs font-bold uppercase tracking-wider text-navy-800 mb-3">Isu Utama &amp; Implikasi:</h4>
+              <ul class="space-y-2.5 text-sm text-slate-700">
+                <li class="flex items-start gap-2.5">
+                  <svg class="w-4 h-4 text-aksen-600 mt-1 shrink-0" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" aria-hidden="true">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5" />
+                  </svg>
+                  <span><strong>Akaun Digunakan Pihak Ketiga:</strong> Akaun dipinjamkan, disewakan, atau dikendalikan oleh individu lain untuk memindahkan wang.</span>
+                </li>
+                <li class="flex items-start gap-2.5">
+                  <svg class="w-4 h-4 text-aksen-600 mt-1 shrink-0" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" aria-hidden="true">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5" />
+                  </svg>
+                  <span><strong>Tawaran Kerja / Komisen Mencurigakan:</strong> Tugasan "pemprosesan pembayaran", ejen komisen mudah, atau pertukaran dana yang menjadi saluran scam.</span>
+                </li>
+                <li class="flex items-start gap-2.5">
+                  <svg class="w-4 h-4 text-aksen-600 mt-1 shrink-0" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" aria-hidden="true">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5" />
+                  </svg>
+                  <span><strong>Akaun Disekat / Dibekukan:</strong> Sekatan transaksi, pembekuan baki, atau kesukaran membuka akaun baharu akibat aduan penipuan.</span>
+                </li>
+                <li class="flex items-start gap-2.5">
+                  <svg class="w-4 h-4 text-aksen-600 mt-1 shrink-0" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" aria-hidden="true">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5" />
+                  </svg>
+                  <span><strong>Implikasi Siasatan &amp; Hak Pemilik Akaun:</strong> Memahami risiko siasatan, tanggungjawab penjelasan fakta, serta hak mendapatkan bimbingan.</span>
+                </li>
+              </ul>
+            </div>
+
+            <div class="mt-6 pt-4 border-t border-slate-200/80 flex items-center justify-between gap-4">
+              <span class="text-xs text-slate-500">Fokus: Kronologi akaun, bukti &amp; implikasi</span>
+              <a href="#borang-rundingan" onclick="pilihKategoriBorang('Kes Keldai Akaun')" class="text-xs sm:text-sm font-semibold text-aksen-600 hover:text-navy-900 transition-colors">
+                Rundingan Kes Keldai Akaun →
+              </a>
+            </div>
+          </article>
+
+        </div>
+
+        <!-- Banner Perbandingan Ringkas -->
+        <div class="mt-8 rounded-2xl bg-aksen-50 border border-aksen-600/15 p-5 sm:p-6 flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+          <div class="flex items-start gap-3.5">
+            <div class="w-9 h-9 rounded-lg bg-aksen-600 text-white flex items-center justify-center shrink-0 mt-0.5">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M11.25 11.25l.041-.02a.75.75 0 011.063.852l-.708 2.836a.75.75 0 001.063.853l.041-.021M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9-3.75h.008v.008H12V8.25z" />
+              </svg>
+            </div>
+            <div>
+              <h3 class="text-sm sm:text-base font-bold text-navy-900">
+                Tidak pasti kategori kes anda atau berlaku kedua-duanya?
+              </h3>
+              <p class="text-xs sm:text-sm text-slate-600 mt-0.5">
+                Ramai individu bermula sebagai mangsa tawaran palsu atau penipuan sebelum akaun mereka turut terbabit dalam aliran dana. Pilih <em>"Kedua-duanya / Tidak Pasti"</em> pada borang rundingan.
+              </p>
+            </div>
+          </div>
+          <a href="#borang-rundingan" onclick="pilihKategoriBorang('Kedua-duanya / Tidak Pasti')" class="shrink-0 inline-flex items-center justify-center px-4 py-2.5 rounded-xl text-xs sm:text-sm font-semibold bg-white text-navy-900 border border-slate-200 hover:border-navy-900 transition-colors">
+            Pilih Kategori Ini
+          </a>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- =====================================================================
+         4. PANDUAN TINDAKAN SEGERA ("APA PERLU DILAKUKAN SEKARANG")
+         ===================================================================== -->
+    <section id="langkah-segera" class="py-16 sm:py-20 lg:py-24 bg-slate-50">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+
+        <!-- Tajuk & Bar Kemajuan Senarai Semak -->
+        <div class="flex flex-col lg:flex-row lg:items-end justify-between gap-6 mb-10">
+          <div class="max-w-2xl">
+            <span class="inline-block px-3 py-1 rounded-full text-xs font-semibold uppercase tracking-wider bg-aksen-50 text-aksen-600 mb-3">
+              Panduan Praktikal
+            </span>
+            <h2 class="text-2xl sm:text-3xl lg:text-4xl font-bold text-navy-900 tracking-tight">
+              Apa Perlu Dilakukan Sekarang
+            </h2>
+            <p class="mt-3 text-sm sm:text-base text-slate-600 leading-relaxed">
+              Ikuti 5 langkah awal ini secara teratur. Anda boleh menanda setiap langkah pada senarai semak di bawah untuk memantau persiapan kes anda.
+            </p>
+          </div>
+
+          <!-- Kad Kemajuan Interaktif -->
+          <div class="bg-white rounded-2xl p-4 sm:p-5 border border-slate-200 shadow-kad w-full lg:w-80 shrink-0">
+            <div class="flex items-center justify-between text-xs sm:text-sm font-semibold mb-2">
+              <span class="text-navy-900">Kemajuan Persiapan</span>
+              <span id="checklist-progress-text" class="text-aksen-600">0 / 5 Selesai</span>
+            </div>
+            <div class="w-full h-2.5 bg-slate-100 rounded-full overflow-hidden">
+              <div id="checklist-progress-bar" class="h-full bg-aksen-600 rounded-full transition-all duration-300" style="width: 0%;"></div>
+            </div>
+            <div class="mt-2.5 flex items-center justify-between text-xs text-slate-500">
+              <span id="checklist-status-note">Tandakan langkah yang telah dibuat</span>
+              <button type="button" id="reset-checklist-btn" class="font-medium text-slate-600 hover:text-navy-900 underline">
+                Set semula
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- 5 Kad Langkah Interaktif -->
+        <div class="space-y-4">
+
+          <!-- Langkah 1 -->
+          <div class="checklist-card bg-white rounded-2xl p-5 sm:p-6 border border-slate-200 shadow-kad hover:shadow-kad-hover transition-all">
+            <div class="flex items-start gap-4">
+              <input
+                type="checkbox"
+                id="step-1"
+                data-step="1"
+                class="step-checkbox mt-1 w-5 h-5 rounded border-slate-300 text-aksen-600 focus:ring-aksen-500 cursor-pointer shrink-0"
+              />
+              <div class="flex-1 min-w-0">
+                <div class="flex flex-wrap items-center gap-2.5 mb-1.5">
+                  <span class="px-2.5 py-0.5 rounded-md text-xs font-bold bg-navy-900 text-white">Langkah 1</span>
+                  <label for="step-1" class="text-base sm:text-lg font-bold text-navy-900 cursor-pointer">
+                    Mengumpul Bukti Transaksi &amp; Tangkap Layar
+                  </label>
+                </div>
+                <p class="text-sm text-slate-600 leading-relaxed">
+                  Simpan resit pemindahan wang, nombor rujukan transaksi, butiran akaun penerima/pengirim, penyata berkaitan, serta tangkap layar skrin aplikasi atau baki sebelum sebarang mesej atau rekod terpadam.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Langkah 2 -->
+          <div class="checklist-card bg-white rounded-2xl p-5 sm:p-6 border border-slate-200 shadow-kad hover:shadow-kad-hover transition-all">
+            <div class="flex items-start gap-4">
+              <input
+                type="checkbox"
+                id="step-2"
+                data-step="2"
+                class="step-checkbox mt-1 w-5 h-5 rounded border-slate-300 text-aksen-600 focus:ring-aksen-500 cursor-pointer shrink-0"
+              />
+              <div class="flex-1 min-w-0">
+                <div class="flex flex-wrap items-center gap-2.5 mb-1.5">
+                  <span class="px-2.5 py-0.5 rounded-md text-xs font-bold bg-navy-900 text-white">Langkah 2</span>
+                  <label for="step-2" class="text-base sm:text-lg font-bold text-navy-900 cursor-pointer">
+                    Menyimpan Rekod Komunikasi Secara Utuh
+                  </label>
+                </div>
+                <p class="text-sm text-slate-600 leading-relaxed">
+                  Kekalkan log perbualan WhatsApp, Telegram, SMS, e-mel, nombor telefon, pautan laman web/iklan, dan profil pihak yang berurusan. Jangan padam perbualan walaupun situasi terasa mengelirukan.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Langkah 3 -->
+          <div class="checklist-card bg-white rounded-2xl p-5 sm:p-6 border border-slate-200 shadow-kad hover:shadow-kad-hover transition-all">
+            <div class="flex items-start gap-4">
+              <input
+                type="checkbox"
+                id="step-3"
+                data-step="3"
+                class="step-checkbox mt-1 w-5 h-5 rounded border-slate-300 text-aksen-600 focus:ring-aksen-500 cursor-pointer shrink-0"
+              />
+              <div class="flex-1 min-w-0">
+                <div class="flex flex-wrap items-center gap-2.5 mb-1.5">
+                  <span class="px-2.5 py-0.5 rounded-md text-xs font-bold bg-navy-900 text-white">Langkah 3</span>
+                  <label for="step-3" class="text-base sm:text-lg font-bold text-navy-900 cursor-pointer">
+                    Menyemak Status Laporan / Bank &amp; Keselamatan Akaun
+                  </label>
+                </div>
+                <p class="text-sm text-slate-600 leading-relaxed">
+                  Semak status sekatan atau notis daripada pihak bank, rekodkan nombor rujukan laporan polis atau saluran aduan rasmi (jika sudah dibuat), serta kemas kini keselamatan peranti tanpa berkongsi sebarang OTP/PIN.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Langkah 4 -->
+          <div class="checklist-card bg-white rounded-2xl p-5 sm:p-6 border border-slate-200 shadow-kad hover:shadow-kad-hover transition-all">
+            <div class="flex items-start gap-4">
+              <input
+                type="checkbox"
+                id="step-4"
+                data-step="4"
+                class="step-checkbox mt-1 w-5 h-5 rounded border-slate-300 text-aksen-600 focus:ring-aksen-500 cursor-pointer shrink-0"
+              />
+              <div class="flex-1 min-w-0">
+                <div class="flex flex-wrap items-center gap-2.5 mb-1.5">
+                  <span class="px-2.5 py-0.5 rounded-md text-xs font-bold bg-navy-900 text-white">Langkah 4</span>
+                  <label for="step-4" class="text-base sm:text-lg font-bold text-navy-900 cursor-pointer">
+                    Menyediakan Kronologi Kejadian Mengikut Tarikh &amp; Masa
+                  </label>
+                </div>
+                <p class="text-sm text-slate-600 leading-relaxed">
+                  Catatkan urutan peristiwa secara ringkas dan tepat: bila komunikasi bermula, bagaimana transaksi atau akses akaun berlaku, jumlah terlibat, serta bila sekatan atau penipuan mula disedari.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Langkah 5 -->
+          <div class="checklist-card bg-white rounded-2xl p-5 sm:p-6 border border-slate-200 shadow-kad hover:shadow-kad-hover transition-all">
+            <div class="flex items-start gap-4">
+              <input
+                type="checkbox"
+                id="step-5"
+                data-step="5"
+                class="step-checkbox mt-1 w-5 h-5 rounded border-slate-300 text-aksen-600 focus:ring-aksen-500 cursor-pointer shrink-0"
+              />
+              <div class="flex-1 min-w-0">
+                <div class="flex flex-wrap items-center gap-2.5 mb-1.5">
+                  <span class="px-2.5 py-0.5 rounded-md text-xs font-bold bg-navy-900 text-white">Langkah 5</span>
+                  <label for="step-5" class="text-base sm:text-lg font-bold text-navy-900 cursor-pointer">
+                    Menghadiri Sesi Rundingan &amp; Menyusun Langkah Seterusnya
+                  </label>
+                </div>
+                <p class="text-sm text-slate-600 leading-relaxed">
+                  Sertai sesi rundingan bersama bahan yang telah disusun agar kita dapat menilai konteks kes, memahami hak serta implikasi yang berkaitan, dan merancang tindakan susulan secara berfasa.
+                </p>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- =====================================================================
+         5. BORANG TEMPAHAN RUNDINGAN INTERAKTIF
+         ===================================================================== -->
+    <section id="borang-rundingan" class="py-16 sm:py-20 lg:py-24 bg-white border-y border-slate-200/70">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-start">
+
+          <!-- Kolum Kiri: Panduan Sebelum Menempah & Notis Keselamatan -->
+          <div class="lg:col-span-5 space-y-6">
+            <div>
+              <span class="inline-block px-3 py-1 rounded-full text-xs font-semibold uppercase tracking-wider bg-aksen-50 text-aksen-600 mb-3">
+                Tempahan Sesi
+              </span>
+              <h2 class="text-2xl sm:text-3xl lg:text-4xl font-bold text-navy-900 tracking-tight">
+                Borang Tempahan Rundingan
+              </h2>
+              <p class="mt-3 text-sm sm:text-base text-slate-600 leading-relaxed">
+                Lengkapkan maklumat asas di bawah untuk menjadualkan sesi rundingan awal. Anda boleh menggunakan nama samaran jika lebih selesa pada peringkat awal.
+              </p>
+            </div>
+
+            <!-- Notis Keselamatan Maklumat Sensitif -->
+            <div class="rounded-2xl bg-amber-50 border border-amber-200 p-5 space-y-2.5">
+              <div class="flex items-center gap-2.5 text-amber-900 font-bold text-sm">
+                <svg class="w-5 h-5 text-amber-600 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m9-.75a9 9 0 11-18 0 9 9 0 0118 0zm-9 3.75h.008v.008H12v-.008z" />
+                </svg>
+                <span>Notis Keselamatan Penting</span>
+              </div>
+              <p class="text-xs sm:text-sm text-amber-900/90 leading-relaxed">
+                <strong>Jangan sekali-kali menulis atau berkongsi</strong> kata laluan perbankan dalam talian, nombor PIN kad/ATM, atau kod pengesahan TAC / OTP dalam borang ini mahupun semasa perbualan.
+              </p>
+            </div>
+
+            <!-- Maklumat Sesi -->
+            <div class="rounded-2xl bg-slate-50 border border-slate-200/80 p-5 space-y-3.5 text-sm">
+              <h3 class="font-bold text-navy-900">Apa yang Berlaku Selepas Tempahan?</h3>
+              <ul class="space-y-2.5 text-slate-600">
+                <li class="flex items-start gap-2.5">
+                  <span class="w-5 h-5 rounded-full bg-aksen-50 text-aksen-600 font-bold text-xs flex items-center justify-center shrink-0 mt-0.5">1</span>
+                  <span>Kod rujukan sesi dijana serta-merta sebagai rekod ringkas tempahan anda.</span>
+                </li>
+                <li class="flex items-start gap-2.5">
+                  <span class="w-5 h-5 rounded-full bg-aksen-50 text-aksen-600 font-bold text-xs flex items-center justify-center shrink-0 mt-0.5">2</span>
+                  <span>Kami menyemak ringkasan kategori dan mod rundingan pilihan anda.</span>
+                </li>
+                <li class="flex items-start gap-2.5">
+                  <span class="w-5 h-5 rounded-full bg-aksen-50 text-aksen-600 font-bold text-xs flex items-center justify-center shrink-0 mt-0.5">3</span>
+                  <span>Sesi berfokus kepada fakta, bukti sokongan, dan pilihan langkah seterusnya.</span>
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          <!-- Kolum Kanan: Borang Interaktif & Kad Pengesahan Rujukan -->
+          <div class="lg:col-span-7">
+            <div class="bg-slate-50/70 rounded-2xl p-6 sm:p-8 border border-slate-200 shadow-kad">
+
+              <!-- Kotak Ralat Validasi (tanpa alert) -->
+              <div id="form-error-box" class="hidden mb-6 rounded-xl bg-red-50 border border-red-200 p-4 text-sm text-red-800" role="alert">
+                <p class="font-semibold mb-1">Sila semak medan berikut sebelum menghantar:</p>
+                <ul id="form-error-list" class="list-disc list-inside space-y-0.5 text-xs sm:text-sm"></ul>
+              </div>
+
+              <form id="rundingan-form" novalidate class="space-y-6">
+
+                <!-- 1. Pilihan Kategori Kes -->
+                <div>
+                  <label class="block text-sm font-bold text-navy-900 mb-2.5">
+                    1. Kategori Kes <span class="text-red-600">*</span>
+                  </label>
+                  <div class="grid grid-cols-1 sm:grid-cols-3 gap-3" role="radiogroup" aria-label="Kategori Kes">
+                    <label class="kategori-option relative flex items-center gap-2.5 p-3.5 rounded-xl bg-white border border-slate-200 cursor-pointer hover:border-aksen-600 transition-all">
+                      <input type="radio" name="kategoriKes" value="Mangsa Scam" class="kategori-radio text-aksen-600 focus:ring-aksen-500" />
+                      <span class="text-xs sm:text-sm font-semibold text-slate-800">Mangsa Scam</span>
+                    </label>
+
+                    <label class="kategori-option relative flex items-center gap-2.5 p-3.5 rounded-xl bg-white border border-slate-200 cursor-pointer hover:border-aksen-600 transition-all">
+                      <input type="radio" name="kategoriKes" value="Kes Keldai Akaun" class="kategori-radio text-aksen-600 focus:ring-aksen-500" />
+                      <span class="text-xs sm:text-sm font-semibold text-slate-800">Kes Keldai Akaun</span>
+                    </label>
+
+                    <label class="kategori-option relative flex items-center gap-2.5 p-3.5 rounded-xl bg-white border border-slate-200 cursor-pointer hover:border-aksen-600 transition-all">
+                      <input type="radio" name="kategoriKes" value="Kedua-duanya / Tidak Pasti" class="kategori-radio text-aksen-600 focus:ring-aksen-500" />
+                      <span class="text-xs sm:text-sm font-semibold text-slate-800">Kedua-duanya / Tidak Pasti</span>
+                    </label>
+                  </div>
+                </div>
+
+                <!-- 2. Nama Samaran / Nama Penuh & Hubungan -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-5">
+                  <div>
+                    <label for="nama-input" class="block text-sm font-bold text-navy-900 mb-1.5">
+                      2. Nama Samaran / Nama Penuh <span class="text-red-600">*</span>
+                    </label>
+                    <input
+                      type="text"
+                      id="nama-input"
+                      name="nama"
+                      placeholder="Contoh: Aiman / Ahmad bin Ali"
+                      class="w-full px-4 py-3 rounded-xl bg-white border border-slate-300 text-sm text-slate-800 placeholder:text-slate-400 focus:outline-none focus:border-aksen-600 focus:ring-2 focus:ring-aksen-600/20 transition-all"
+                    />
+                  </div>
+
+                  <div>
+                    <label for="hubungan-input" class="block text-sm font-bold text-navy-900 mb-1.5">
+                      3. No. Telefon / WhatsApp atau E-mel <span class="text-red-600">*</span>
+                    </label>
+                    <input
+                      type="text"
+                      id="hubungan-input"
+                      name="hubungan"
+                      placeholder="Contoh: 01X-XXXXXXX atau nama@emel.com"
+                      class="w-full px-4 py-3 rounded-xl bg-white border border-slate-300 text-sm text-slate-800 placeholder:text-slate-400 focus:outline-none focus:border-aksen-600 focus:ring-2 focus:ring-aksen-600/20 transition-all"
+                    />
+                  </div>
+                </div>
+
+                <!-- 4. Tarikh Kejadian & Mod Rundingan -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-5">
+                  <div>
+                    <label for="tarikh-input" class="block text-sm font-bold text-navy-900 mb-1.5">
+                      4. Tarikh Kejadian / Mula Disedari <span class="text-red-600">*</span>
+                    </label>
+                    <input
+                      type="date"
+                      id="tarikh-input"
+                      name="tarikhKejadian"
+                      class="w-full px-4 py-3 rounded-xl bg-white border border-slate-300 text-sm text-slate-800 focus:outline-none focus:border-aksen-600 focus:ring-2 focus:ring-aksen-600/20 transition-all"
+                    />
+                  </div>
+
+                  <div>
+                    <label for="mod-input" class="block text-sm font-bold text-navy-900 mb-1.5">
+                      5. Mod Rundingan <span class="text-red-600">*</span>
+                    </label>
+                    <select
+                      id="mod-input"
+                      name="modRundingan"
+                      class="w-full px-4 py-3 rounded-xl bg-white border border-slate-300 text-sm text-slate-800 focus:outline-none focus:border-aksen-600 focus:ring-2 focus:ring-aksen-600/20 transition-all"
+                    >
+                      <option value="">Pilih mod rundingan...</option>
+                      <option value="Dalam Talian (Video / Sidang Web)">Dalam Talian (Video / Sidang Web)</option>
+                      <option value="Telefon / Panggilan Suara">Telefon / Panggilan Suara</option>
+                      <option value="Bersemuka (Mengikut Temujanji)">Bersemuka (Mengikut Temujanji)</option>
+                    </select>
+                  </div>
+                </div>
+
+                <!-- 6. Slot Masa Pilihan -->
+                <div>
+                  <label class="block text-sm font-bold text-navy-900 mb-2">
+                    6. Slot Masa Pilihan <span class="text-red-600">*</span>
+                  </label>
+                  <div class="grid grid-cols-1 sm:grid-cols-3 gap-2.5">
+                    <label class="slot-option flex items-center gap-2 p-3 rounded-xl bg-white border border-slate-200 cursor-pointer hover:border-aksen-600 transition-all">
+                      <input type="radio" name="slotMasa" value="Pagi (9.00 PG – 12.00 TGH)" class="slot-radio text-aksen-600 focus:ring-aksen-500" />
+                      <span class="text-xs sm:text-sm font-medium text-slate-700">Pagi (9.00 – 12.00)</span>
+                    </label>
+                    <label class="slot-option flex items-center gap-2 p-3 rounded-xl bg-white border border-slate-200 cursor-pointer hover:border-aksen-600 transition-all">
+                      <input type="radio" name="slotMasa" value="Petang (2.00 PTG – 5.00 PTG)" class="slot-radio text-aksen-600 focus:ring-aksen-500" />
+                      <span class="text-xs sm:text-sm font-medium text-slate-700">Petang (2.00 – 5.00)</span>
+                    </label>
+                    <label class="slot-option flex items-center gap-2 p-3 rounded-xl bg-white border border-slate-200 cursor-pointer hover:border-aksen-600 transition-all">
+                      <input type="radio" name="slotMasa" value="Malam / Fleksibel (8.00 MLM – 9.30 MLM)" class="slot-radio text-aksen-600 focus:ring-aksen-500" />
+                      <span class="text-xs sm:text-sm font-medium text-slate-700">Malam (8.00 – 9.30)</span>
+                    </label>
+                  </div>
+                </div>
+
+                <!-- 7. Ringkasan Kes Secara Umum -->
+                <div>
+                  <div class="flex items-center justify-between gap-2 mb-1.5">
+                    <label for="ringkasan-input" class="block text-sm font-bold text-navy-900">
+                      7. Ringkasan Kes Secara Umum <span class="text-red-600">*</span>
+                    </label>
+                    <span class="text-xs text-slate-500">Tiada kata laluan / PIN / OTP</span>
+                  </div>
+                  <textarea
+                    id="ringkasan-input"
+                    name="ringkasan"
+                    rows="4"
+                    placeholder="Terangkan secara ringkas apa yang berlaku (contoh: tawaran kerja/pelaburan, pemindahan dana, atau akaun bank disekat). Elakkan menulis kata laluan, PIN, atau kod OTP."
+                    class="w-full px-4 py-3 rounded-xl bg-white border border-slate-300 text-sm text-slate-800 placeholder:text-slate-400 focus:outline-none focus:border-aksen-600 focus:ring-2 focus:ring-aksen-600/20 transition-all"
+                  ></textarea>
+                </div>
+
+                <!-- Akujanji Kerahsiaan -->
+                <div class="flex items-start gap-3">
+                  <input
+                    type="checkbox"
+                    id="akujanji-checkbox"
+                    class="mt-1 w-4 h-4 rounded border-slate-300 text-aksen-600 focus:ring-aksen-500 cursor-pointer shrink-0"
+                  />
+                  <label for="akujanji-checkbox" class="text-xs sm:text-sm text-slate-600 leading-relaxed cursor-pointer">
+                    Saya faham bahawa maklumat ini digunakan untuk tujuan penyusunan sesi rundingan awal dan saya tidak memasukkan sebarang kata laluan, PIN, atau kod TAC/OTP.
+                  </label>
+                </div>
+
+                <!-- Butang Hantar -->
+                <button
+                  type="submit"
+                  class="w-full inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl text-sm sm:text-base font-semibold text-white bg-navy-900 hover:bg-navy-800 active:scale-[0.99] transition-all shadow-md cursor-pointer"
+                >
+                  <span>Hantar Permohonan Rundingan</span>
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24" aria-hidden="true">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M6 12L3.269 3.126A59.768 59.768 0 0121.485 12 59.77 59.77 0 013.27 20.876L5.999 12zm0 0h7.5" />
+                  </svg>
+                </button>
+              </form>
+
+              <!-- Kad Pengesahan Rujukan Dinamik Selepas Dihantar -->
+              <div id="pengesahan-rundingan" class="hidden mt-6 rounded-2xl bg-white border-2 border-emerald-500/50 p-6 shadow-md">
+                <div class="flex flex-wrap items-start justify-between gap-3 border-b border-slate-100 pb-4">
+                  <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-full bg-emerald-100 text-emerald-700 flex items-center justify-center shrink-0">
+                      <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" aria-hidden="true">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5" />
+                      </svg>
+                    </div>
+                    <div>
+                      <span class="text-xs font-semibold uppercase tracking-wider text-emerald-700">Permohonan Diterima</span>
+                      <h3 class="text-lg font-bold text-navy-900">Ringkasan Rujukan Sesi Rundingan</h3>
+                    </div>
+                  </div>
+                  <div class="text-left sm:text-right">
+                    <span class="block text-xs text-slate-500">No. Rujukan Sesi</span>
+                    <span id="ref-kod-sesi" class="font-mono text-sm sm:text-base font-bold text-navy-900 bg-slate-100 px-2.5 py-1 rounded-lg inline-block mt-0.5">
+                      RND-2026-0000
+                    </span>
+                  </div>
+                </div>
+
+                <dl id="ref-butiran-senarai" class="grid grid-cols-1 sm:grid-cols-2 gap-3.5 py-4 text-xs sm:text-sm"></dl>
+
+                <div class="bg-slate-50 rounded-xl p-3.5 text-xs text-slate-600 mb-4 border border-slate-200/70">
+                  <span class="font-semibold text-navy-900">Ringkasan Kes:</span>
+                  <p id="ref-ringkasan-teks" class="mt-1 whitespace-pre-line text-slate-700"></p>
+                </div>
+
+                <div class="flex flex-wrap items-center justify-between gap-3 pt-1">
+                  <button
+                    type="button"
+                    id="salin-rujukan-btn"
+                    class="inline-flex items-center gap-2 px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold bg-aksen-50 text-aksen-600 hover:bg-aksen-600 hover:text-white transition-colors cursor-pointer"
+                  >
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 17.25v3.375c0 .621-.504 1.125-1.125 1.125h-9.75a1.125 1.125 0 01-1.125-1.125V7.875c0-.621.504-1.125 1.125-1.125H6.75a9.06 9.06 0 011.5.124m7.5 10.376h3.375c.621 0 1.125-.504 1.125-1.125V11.25c0-4.46-3.243-8.161-7.5-8.876a9.06 9.06 0 00-1.5-.124H9.375c-.621 0-1.125.504-1.125 1.125v3.5m7.5 10.375H9.375a1.125 1.125 0 01-1.125-1.125v-9.25m12 6.625v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5a3.375 3.375 0 00-3.375-3.375H9.75" />
+                    </svg>
+                    <span id="salin-rujukan-label">Salin Ringkasan Rujukan</span>
+                  </button>
+
+                  <button
+                    type="button"
+                    id="tempah-semula-btn"
+                    class="text-xs sm:text-sm font-semibold text-slate-600 hover:text-navy-900 underline cursor-pointer"
+                  >
+                    Buat Permohonan Baru
+                  </button>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- =====================================================================
+         6. SOALAN LAZIM (FAQ ACCORDION)
+         ===================================================================== -->
+    <section id="soalan-lazim" class="py-16 sm:py-20 lg:py-24 bg-slate-50">
+      <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+
+        <div class="text-center mb-10 sm:mb-12">
+          <span class="inline-block px-3 py-1 rounded-full text-xs font-semibold uppercase tracking-wider bg-aksen-50 text-aksen-600 mb-3">
+            Pusat Maklumat
+          </span>
+          <h2 class="text-2xl sm:text-3xl lg:text-4xl font-bold text-navy-900 tracking-tight">
+            Soalan Lazim (FAQ)
+          </h2>
+          <p class="mt-3 text-sm sm:text-base text-slate-600">
+            Jawapan ringkas untuk persoalan lazim mengenai kerahsiaan, dokumen rujukan, kategori kes, dan sesi rundingan.
+          </p>
+        </div>
+
+        <div class="space-y-3.5" id="faq-list">
+
+          <!-- FAQ 1 -->
+          <div class="accordion-item is-open bg-white rounded-2xl border border-slate-200 shadow-kad overflow-hidden">
+            <button
+              type="button"
+              aria-expanded="true"
+              class="accordion-trigger w-full px-5 sm:px-6 py-4 sm:py-5 text-left flex items-center justify-between gap-4 hover:bg-slate-50/70 transition-colors cursor-pointer"
+            >
+              <span class="text-sm sm:text-base font-bold text-navy-900">
+                Adakah maklumat dan kronologi kes saya dirahsiakan?
+              </span>
+              <svg class="accordion-chevron w-5 h-5 text-aksen-600 shrink-0" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
+              </svg>
+            </button>
+            <div class="accordion-content">
+              <div class="accordion-inner">
+                <div class="px-5 sm:px-6 pb-5 text-xs sm:text-sm text-slate-600 leading-relaxed border-t border-slate-100 pt-3.5">
+                  Ya. Sesi rundingan dijalankan dengan prinsip kerahsiaan dan hormat terhadap privasi anda. Pada peringkat awal, anda juga boleh menggunakan nama samaran serta memberi penerangan umum tanpa mendedahkan kata laluan, PIN, atau kod OTP.
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- FAQ 2 -->
+          <div class="accordion-item bg-white rounded-2xl border border-slate-200 shadow-kad overflow-hidden">
+            <button
+              type="button"
+              aria-expanded="false"
+              class="accordion-trigger w-full px-5 sm:px-6 py-4 sm:py-5 text-left flex items-center justify-between gap-4 hover:bg-slate-50/70 transition-colors cursor-pointer"
+            >
+              <span class="text-sm sm:text-base font-bold text-navy-900">
+                Apakah dokumen atau bahan yang perlu saya sediakan sebelum rundingan?
+              </span>
+              <svg class="accordion-chevron w-5 h-5 text-aksen-600 shrink-0" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
+              </svg>
+            </button>
+            <div class="accordion-content">
+              <div class="accordion-inner">
+                <div class="px-5 sm:px-6 pb-5 text-xs sm:text-sm text-slate-600 leading-relaxed border-t border-slate-100 pt-3.5">
+                  Sediakan bukti transaksi atau rujukan pembayaran, tangkap layar perbualan/iklan/aplikasi berkaitan, notis atau makluman daripada bank (jika ada), nombor rujukan laporan yang telah dibuat, serta catatan ringkas tarikh dan masa kejadian. Jika belum lengkap, anda tetap boleh memulakan rundingan awal.
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- FAQ 3 -->
+          <div class="accordion-item bg-white rounded-2xl border border-slate-200 shadow-kad overflow-hidden">
+            <button
+              type="button"
+              aria-expanded="false"
+              class="accordion-trigger w-full px-5 sm:px-6 py-4 sm:py-5 text-left flex items-center justify-between gap-4 hover:bg-slate-50/70 transition-colors cursor-pointer"
+            >
+              <span class="text-sm sm:text-base font-bold text-navy-900">
+                Apakah perbezaan utama antara kes mangsa scam dan kes keldai akaun?
+              </span>
+              <svg class="accordion-chevron w-5 h-5 text-aksen-600 shrink-0" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
+              </svg>
+            </button>
+            <div class="accordion-content">
+              <div class="accordion-inner">
+                <div class="px-5 sm:px-6 pb-5 text-xs sm:text-sm text-slate-600 leading-relaxed border-t border-slate-100 pt-3.5">
+                  <strong>Mangsa scam</strong> merujuk kepada individu yang mengalami kerugian dana atau akses akibat penipuan seperti pelaburan palsu, pinjaman tidak wujud, panggilan penyamaran, atau e-dagang palsu. <strong>Kes keldai akaun</strong> pula berlaku apabila akaun milik seseorang digunakan sebagai laluan menerima atau memindahkan dana yang dikaitkan dengan penipuan — sama ada melalui tawaran kerja/komisen mencurigakan, pinjaman akaun, atau manipulasi.
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- FAQ 4 -->
+          <div class="accordion-item bg-white rounded-2xl border border-slate-200 shadow-kad overflow-hidden">
+            <button
+              type="button"
+              aria-expanded="false"
+              class="accordion-trigger w-full px-5 sm:px-6 py-4 sm:py-5 text-left flex items-center justify-between gap-4 hover:bg-slate-50/70 transition-colors cursor-pointer"
+            >
+              <span class="text-sm sm:text-base font-bold text-navy-900">
+                Berapa lama tempoh satu sesi rundingan biasanya berlangsung?
+              </span>
+              <svg class="accordion-chevron w-5 h-5 text-aksen-600 shrink-0" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
+              </svg>
+            </button>
+            <div class="accordion-content">
+              <div class="accordion-inner">
+                <div class="px-5 sm:px-6 pb-5 text-xs sm:text-sm text-slate-600 leading-relaxed border-t border-slate-100 pt-3.5">
+                  Sesi rundingan awal biasanya mengambil masa sekitar <strong>30 hingga 45 minit</strong> bergantung kepada kerumitan kronologi dan jumlah dokumen yang perlu disemak bersama. Sesi susulan boleh dijadualkan jika diperlukan.
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- FAQ 5 -->
+          <div class="accordion-item bg-white rounded-2xl border border-slate-200 shadow-kad overflow-hidden">
+            <button
+              type="button"
+              aria-expanded="false"
+              class="accordion-trigger w-full px-5 sm:px-6 py-4 sm:py-5 text-left flex items-center justify-between gap-4 hover:bg-slate-50/70 transition-colors cursor-pointer"
+            >
+              <span class="text-sm sm:text-base font-bold text-navy-900">
+                Adakah sesi rundingan ini menjamin pemulangan wang atau pembukaan semula akaun?
+              </span>
+              <svg class="accordion-chevron w-5 h-5 text-aksen-600 shrink-0" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
+              </svg>
+            </button>
+            <div class="accordion-content">
+              <div class="accordion-inner">
+                <div class="px-5 sm:px-6 pb-5 text-xs sm:text-sm text-slate-600 leading-relaxed border-t border-slate-100 pt-3.5">
+                  Tidak. Khidmat ini menyediakan rundingan, penyusunan bukti dan kronologi, serta penerangan mengenai hak dan langkah prosedur. Keputusan rasmi berkaitan pemulangan dana, pembukaan sekatan akaun, atau siasatan berada di bawah bidang kuasa institusi kewangan, pihak berkuasa berkaitan, atau mahkamah.
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- =====================================================================
+       7. FOOTER (PENAFIAN, PRIVASI & PAUTAN PANTAS)
+       ===================================================================== -->
+  <footer class="bg-navy-950 text-slate-300 pt-14 pb-10 border-t border-navy-800">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-8 lg:gap-10 pb-10 border-b border-white/10">
+
+        <!-- Jenama & Ringkasan -->
+        <div class="lg:col-span-5 space-y-3">
+          <div class="flex items-center gap-2.5">
+            <div class="w-9 h-9 rounded-lg bg-navy-800 text-aksen-400 flex items-center justify-center">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75m-3-7.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285z" />
+              </svg>
+            </div>
+            <span class="text-base font-bold text-white">Pusat Rundingan &amp; Advokasi Keldai Akaun</span>
+          </div>
+          <p class="text-xs sm:text-sm text-slate-400 leading-relaxed">
+            Portal informasi dan tempahan sesi rundingan bagi membantu mangsa penipuan scam serta individu yang terbabit dalam isu akaun disekat atau kes keldai akaun menyusun langkah dengan lebih jelas dan berstruktur.
+          </p>
+        </div>
+
+        <!-- Pautan Pantas -->
+        <div class="lg:col-span-3 space-y-3">
+          <h3 class="text-xs font-bold uppercase tracking-wider text-white">Pautan Pantas</h3>
+          <ul class="space-y-2 text-xs sm:text-sm">
+            <li><a href="#tentang" class="hover:text-white transition-colors">Tentang Khidmat</a></li>
+            <li><a href="#jenis-kes" class="hover:text-white transition-colors">Jenis Situasi Kes</a></li>
+            <li><a href="#langkah-segera" class="hover:text-white transition-colors">Panduan Langkah Segera</a></li>
+            <li><a href="#borang-rundingan" class="hover:text-white transition-colors">Borang Tempahan Rundingan</a></li>
+            <li><a href="#soalan-lazim" class="hover:text-white transition-colors">Soalan Lazim (FAQ)</a></li>
+          </ul>
+        </div>
+
+        <!-- Notis Privasi & Kerahsiaan -->
+        <div class="lg:col-span-4 space-y-3">
+          <h3 class="text-xs font-bold uppercase tracking-wider text-white">Privasi &amp; Kerahsiaan</h3>
+          <p class="text-xs sm:text-sm text-slate-400 leading-relaxed">
+            Butiran yang dikemukakan melalui borang rundingan hanya digunakan bagi tujuan penjadualan dan penyediaan sesi. Kami menggalakkan penggunaan nama samaran pada peringkat awal dan melarang sama sekali perkongsian kata laluan, PIN, atau OTP.
+          </p>
+        </div>
+
+      </div>
+
+      <!-- Penafian Rasmi & Hak Cipta -->
+      <div class="pt-8 space-y-4">
+        <div class="rounded-xl bg-white/5 border border-white/10 p-4 text-xs text-slate-400 leading-relaxed">
+          <strong class="text-slate-200">Penafian:</strong> Maklumat dan sesi yang disediakan melalui halaman ini adalah berbentuk khidmat rundingan awal, penyusunan dokumentasi, dan panduan informasi umum. Ia bukan nasihat guaman rasmi yang mengikat dan bukan jaminan terhadap sebarang keputusan, tindakan, atau hasil rasmi daripada pihak berkuasa, institusi kewangan, atau mahkamah.
+        </div>
+
+        <div class="flex flex-col sm:flex-row items-center justify-between gap-2 text-xs text-slate-500">
+          <p>© <span id="tahun-semasa">2026</span> Pusat Rundingan &amp; Advokasi Keldai Akaun. Hak cipta terpelihara.</p>
+          <p>Reka Bentuk Portal Rundingan Profesional</p>
+        </div>
+      </div>
+
+    </div>
+  </footer>
+
+  <!-- =====================================================================
+       JAVASCRIPT INTERAKTIF
+       ===================================================================== -->
+  <script>
+    (function () {
+      'use strict';
+
+      // Kemas kini tahun semasa secara automatik
+      const tahunEl = document.getElementById('tahun-semasa');
+      if (tahunEl) {
+        tahunEl.textContent = new Date().getFullYear();
+      }
+
+      // -------------------------------------------------------------------
+      // 1. MENU NAVIGASI MUDAH ALIH
+      // -------------------------------------------------------------------
+      const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+      const mobileMenu = document.getElementById('mobile-menu');
+      const iconOpen = document.getElementById('icon-menu-open');
+      const iconClose = document.getElementById('icon-menu-close');
+
+      function setMobileMenu(open) {
+        if (!mobileMenu || !mobileMenuBtn) return;
+        mobileMenu.classList.toggle('hidden', !open);
+        mobileMenuBtn.setAttribute('aria-expanded', String(open));
+        iconOpen?.classList.toggle('hidden', open);
+        iconClose?.classList.toggle('hidden', !open);
+      }
+
+      mobileMenuBtn?.addEventListener('click', () => {
+        const isExpanded = mobileMenuBtn.getAttribute('aria-expanded') === 'true';
+        setMobileMenu(!isExpanded);
+      });
+
+      document.querySelectorAll('.mobile-nav-link').forEach((link) => {
+        link.addEventListener('click', () => setMobileMenu(false));
+      });
+
+      // -------------------------------------------------------------------
+      // 2. TAB INTERAKTIF JENIS KES
+      // -------------------------------------------------------------------
+      const tabs = document.querySelectorAll('.case-tab');
+      const cardScam = document.getElementById('card-scam');
+      const cardKeldai = document.getElementById('card-keldai');
+      const caseGrid = document.getElementById('case-cards-grid');
+
+      function aktifkanTabKes(tabKey) {
+        tabs.forEach((tab) => {
+          const isSelected = tab.dataset.tab === tabKey;
+          tab.setAttribute('aria-selected', String(isSelected));
+          if (isSelected) {
+            tab.className = 'case-tab px-4 sm:px-5 py-2.5 rounded-xl text-xs sm:text-sm font-semibold transition-all bg-navy-900 text-white shadow-sm cursor-pointer';
+          } else {
+            tab.className = 'case-tab px-4 sm:px-5 py-2.5 rounded-xl text-xs sm:text-sm font-semibold transition-all bg-slate-100 text-slate-700 hover:bg-slate-200 cursor-pointer';
+          }
+        });
+
+        if (!cardScam || !cardKeldai || !caseGrid) return;
+
+        if (tabKey === 'semua') {
+          cardScam.classList.remove('hidden');
+          cardKeldai.classList.remove('hidden');
+          caseGrid.classList.remove('max-w-3xl', 'mx-auto', 'lg:grid-cols-1');
+          caseGrid.classList.add('lg:grid-cols-2');
+        } else if (tabKey === 'scam') {
+          cardScam.classList.remove('hidden');
+          cardKeldai.classList.add('hidden');
+          caseGrid.classList.remove('lg:grid-cols-2');
+          caseGrid.classList.add('max-w-3xl', 'mx-auto', 'lg:grid-cols-1');
+        } else if (tabKey === 'keldai') {
+          cardScam.classList.add('hidden');
+          cardKeldai.classList.remove('hidden');
+          caseGrid.classList.remove('lg:grid-cols-2');
+          caseGrid.classList.add('max-w-3xl', 'mx-auto', 'lg:grid-cols-1');
+        }
+      }
+
+      tabs.forEach((tab) => {
+        tab.addEventListener('click', () => aktifkanTabKes(tab.dataset.tab));
+      });
+
+      // Fungsi global untuk memilih kategori di borang apabila pautan kad diklik
+      window.pilihKategoriBorang = function (nilaiKategori) {
+        const radios = document.querySelectorAll('input[name="kategoriKes"]');
+        radios.forEach((radio) => {
+          if (radio.value === nilaiKategori) {
+            radio.checked = true;
+          }
+        });
+        kemasKiniGayaRadio();
+      };
+
+      // -------------------------------------------------------------------
+      // 3. SENARAI SEMAK PANDUAN TINDAKAN SEGERA (LANGKAH 1 - 5)
+      // -------------------------------------------------------------------
+      const checkboxes = document.querySelectorAll('.step-checkbox');
+      const progressText = document.getElementById('checklist-progress-text');
+      const progressBar = document.getElementById('checklist-progress-bar');
+      const statusNote = document.getElementById('checklist-status-note');
+      const resetChecklistBtn = document.getElementById('reset-checklist-btn');
+
+      function kemasKiniKemajuan() {
+        const total = checkboxes.length;
+        let selesai = 0;
+
+        checkboxes.forEach((cb) => {
+          const card = cb.closest('.checklist-card');
+          if (cb.checked) {
+            selesai += 1;
+            card?.classList.add('border-aksen-600/50', 'bg-aksen-50/30');
+          } else {
+            card?.classList.remove('border-aksen-600/50', 'bg-aksen-50/30');
+          }
+        });
+
+        const peratus = total > 0 ? Math.round((selesai / total) * 100) : 0;
+        if (progressText) progressText.textContent = `${selesai} / ${total} Selesai`;
+        if (progressBar) progressBar.style.width = `${peratus}%`;
+
+        if (statusNote) {
+          if (selesai === 0) {
+            statusNote.textContent = 'Tandakan langkah yang telah dibuat';
+          } else if (selesai < total) {
+            statusNote.textContent = `Bagus — ${total - selesai} langkah lagi`;
+          } else {
+            statusNote.textContent = 'Semua langkah awal telah disemak';
+          }
+        }
+      }
+
+      checkboxes.forEach((cb) => {
+        cb.addEventListener('change', kemasKiniKemajuan);
+      });
+
+      resetChecklistBtn?.addEventListener('click', () => {
+        checkboxes.forEach((cb) => {
+          cb.checked = false;
+        });
+        kemasKiniKemajuan();
+      });
+
+      // -------------------------------------------------------------------
+      // 4. BORANG TEMPAHAN RUNDINGAN & PENJANAAN RUJUKAN DINAMIK
+      // -------------------------------------------------------------------
+      const form = document.getElementById('rundingan-form');
+      const errorBox = document.getElementById('form-error-box');
+      const errorList = document.getElementById('form-error-list');
+      const pengesahanBox = document.getElementById('pengesahan-rundingan');
+      const refKodSesi = document.getElementById('ref-kod-sesi');
+      const refButiranSenarai = document.getElementById('ref-butiran-senarai');
+      const refRingkasanTeks = document.getElementById('ref-ringkasan-teks');
+      const salinBtn = document.getElementById('salin-rujukan-btn');
+      const salinLabel = document.getElementById('salin-rujukan-label');
+      const tempahSemulaBtn = document.getElementById('tempah-semula-btn');
+
+      function kemasKiniGayaRadio() {
+        document.querySelectorAll('.kategori-option').forEach((lbl) => {
+          const input = lbl.querySelector('input[type="radio"]');
+          if (input?.checked) {
+            lbl.classList.add('border-aksen-600', 'bg-aksen-50/70', 'ring-1', 'ring-aksen-600');
+          } else {
+            lbl.classList.remove('border-aksen-600', 'bg-aksen-50/70', 'ring-1', 'ring-aksen-600');
+          }
+        });
+
+        document.querySelectorAll('.slot-option').forEach((lbl) => {
+          const input = lbl.querySelector('input[type="radio"]');
+          if (input?.checked) {
+            lbl.classList.add('border-aksen-600', 'bg-aksen-50/70', 'ring-1', 'ring-aksen-600');
+          } else {
+            lbl.classList.remove('border-aksen-600', 'bg-aksen-50/70', 'ring-1', 'ring-aksen-600');
+          }
+        });
+      }
+
+      document.querySelectorAll('input[name="kategoriKes"], input[name="slotMasa"]').forEach((input) => {
+        input.addEventListener('change', kemasKiniGayaRadio);
+      });
+
+      // Semakan corak berisiko tinggi (kata laluan / PIN / OTP)
+      function mengandungiMaklumatSensitif(teks) {
+        const polaSensitif = /\b(tac|otp|pin\s*(number|atm|bank)?|kata\s*laluan|password)\b/i;
+        return polaSensitif.test(teks);
+      }
+
+      function janaKodRujukan() {
+        const tahun = new Date().getFullYear();
+        const rawak = Math.floor(1000 + Math.random() * 9000);
+        return `RND-${tahun}-${rawak}`;
+      }
+
+      let teksRujukanUntukDisalin = '';
+
+      form?.addEventListener('submit', (e) => {
+        e.preventDefault();
+
+        const kategoriDipilih = document.querySelector('input[name="kategoriKes"]:checked')?.value || '';
+        const namaVal = (document.getElementById('nama-input')?.value || '').trim();
+        const hubunganVal = (document.getElementById('hubungan-input')?.value || '').trim();
+        const tarikhVal = (document.getElementById('tarikh-input')?.value || '').trim();
+        const modVal = (document.getElementById('mod-input')?.value || '').trim();
+        const slotDipilih = document.querySelector('input[name="slotMasa"]:checked')?.value || '';
+        const ringkasanVal = (document.getElementById('ringkasan-input')?.value || '').trim();
+        const akujanjiChecked = Boolean(document.getElementById('akujanji-checkbox')?.checked);
+
+        const senaraiRalat = [];
+        if (!kategoriDipilih) senaraiRalat.push('Sila pilih kategori kes.');
+        if (!namaVal) senaraiRalat.push('Sila masukkan nama samaran atau nama penuh.');
+        if (!hubunganVal) senaraiRalat.push('Sila masukkan nombor telefon/WhatsApp atau e-mel.');
+        if (!tarikhVal) senaraiRalat.push('Sila pilih tarikh kejadian atau bila mula disedari.');
+        if (!modVal) senaraiRalat.push('Sila pilih mod rundingan.');
+        if (!slotDipilih) senaraiRalat.push('Sila pilih slot masa pilihan.');
+        if (!ringkasanVal || ringkasanVal.length < 15) {
+          senaraiRalat.push('Sila tulis ringkasan kes secara umum (sekurang-kurangnya 15 aksara).');
+        } else if (mengandungiMaklumatSensitif(ringkasanVal)) {
+          senaraiRalat.push('Keselamatan: Jangan sebut atau masukkan perkataan berkaitan kata laluan, PIN, atau TAC/OTP dalam ringkasan.');
+        }
+        if (!akujanjiChecked) {
+          senaraiRalat.push('Sila tandakan kotak pengesahan kerahsiaan dan keselamatan sebelum menghantar.');
+        }
+
+        if (senaraiRalat.length > 0 && errorBox && errorList) {
+          errorList.innerHTML = senaraiRalat.map((item) => `<li>${item}</li>`).join('');
+          errorBox.classList.remove('hidden');
+          errorBox.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+          return;
+        }
+
+        errorBox?.classList.add('hidden');
+
+        const kodRujukan = janaKodRujukan();
+        if (refKodSesi) refKodSesi.textContent = kodRujukan;
+
+        const medanRingkasan = [
+          { label: 'Kategori Kes', nilai: kategoriDipilih },
+          { label: 'Nama / Samaran', nilai: namaVal },
+          { label: 'Hubungan', nilai: hubunganVal },
+          { label: 'Tarikh Kejadian', nilai: tarikhVal },
+          { label: 'Mod Rundingan', nilai: modVal },
+          { label: 'Slot Masa Pilihan', nilai: slotDipilih },
+        ];
+
+        if (refButiranSenarai) {
+          refButiranSenarai.innerHTML = medanRingkasan
+            .map(
+              (m) => `
+              <div class="bg-slate-50 rounded-xl p-3 border border-slate-200/70">
+                <dt class="text-xs text-slate-500 font-medium">${m.label}</dt>
+                <dd class="text-xs sm:text-sm font-semibold text-navy-900 mt-0.5 break-words">${m.nilai}</dd>
+              </div>
+            `
+            )
+            .join('');
+        }
+
+        if (refRingkasanTeks) {
+          refRingkasanTeks.textContent = ringkasanVal;
+        }
+
+        teksRujukanUntukDisalin = [
+          `NO. RUJUKAN SESI: ${kodRujukan}`,
+          `Kategori Kes: ${kategoriDipilih}`,
+          `Nama / Samaran: ${namaVal}`,
+          `Hubungan: ${hubunganVal}`,
+          `Tarikh Kejadian: ${tarikhVal}`,
+          `Mod Rundingan: ${modVal}`,
+          `Slot Masa: ${slotDipilih}`,
+          `Ringkasan Kes: ${ringkasanVal}`,
+        ].join('\n');
+
+        if (salinLabel) {
+          salinLabel.textContent = 'Salin Ringkasan Rujukan';
+        }
+
+        pengesahanBox?.classList.remove('hidden');
+        pengesahanBox?.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      });
+
+      // Salin ringkasan rujukan ke papan klip menggunakan execCommand untuk keserasian iFrame
+      salinBtn?.addEventListener('click', () => {
+        if (!teksRujukanUntukDisalin) return;
+        const textareaSementara = document.createElement('textarea');
+        textareaSementara.value = teksRujukanUntukDisalin;
+        textareaSementara.setAttribute('readonly', '');
+        textareaSementara.style.position = 'absolute';
+        textareaSementara.style.left = '-9999px';
+        document.body.appendChild(textareaSementara);
+        textareaSementara.select();
+
+        try {
+          document.execCommand('copy');
+          if (salinLabel) {
+            salinLabel.textContent = 'Ringkasan Disalin!';
+          }
+        } catch (err) {
+          if (salinLabel) {
+            salinLabel.textContent = 'Sila salin kod secara manual';
+          }
+        } finally {
+          document.body.removeChild(textareaSementara);
+        }
+      });
+
+      // Buat permohonan baharu
+      tempahSemulaBtn?.addEventListener('click', () => {
+        form?.reset();
+        kemasKiniGayaRadio();
+        pengesahanBox?.classList.add('hidden');
+        errorBox?.classList.add('hidden');
+        form?.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      });
+
+      // -------------------------------------------------------------------
+      // 5. SOALAN LAZIM (FAQ ACCORDION)
+      // -------------------------------------------------------------------
+      const triggers = document.querySelectorAll('.accordion-trigger');
+      triggers.forEach((btn) => {
+        btn.addEventListener('click', () => {
+          const item = btn.closest('.accordion-item');
+          if (!item) return;
+          const sedangTerbuka = item.classList.contains('is-open');
+          item.classList.toggle('is-open', !sedangTerbuka);
+          btn.setAttribute('aria-expanded', String(!sedangTerbuka));
+        });
+      });
+    })();
+  </script>
+</body>
+</html>
