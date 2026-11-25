@@ -203,3 +203,4 @@ export async function onRequest(context) {
   }
   return onRequestPost(context);
 }
+Secure Turnstile hostname and action validation.
