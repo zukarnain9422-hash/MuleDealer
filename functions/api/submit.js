@@ -1,3 +1,4 @@
+
 const JSON_HEADERS = {
   "Content-Type": "application/json; charset=utf-8",
   "Cache-Control": "no-store",
@@ -25,7 +26,7 @@ function validDate(value) {
     value <= new Date().toISOString().slice(0, 10);
 }
 
-async function verifyTurnstile(token, secret, ip) {
+async function verifyTurnstile(token, secret, ip, allowedHostnames) {
   const body = new URLSearchParams({
     secret,
     response: token,
@@ -43,14 +44,19 @@ async function verifyTurnstile(token, secret, ip) {
 
   if (!response.ok) return false;
   const result = await response.json();
-  return result.success === true;
+  const hostname = typeof result.hostname === "string"
+    ? result.hostname.toLowerCase()
+    : "";
+
+  return result.success === true &&
+    result.action === "contact" &&
+    allowedHostnames.includes(hostname);
 }
 
 export async function onRequestPost({ request, env }) {
   const requestUrl = new URL(request.url);
   const origin = request.headers.get("Origin");
 
-  // Accept same-origin browser submissions only.
   if (origin && origin !== requestUrl.origin) {
     return reply(403, { ok: false, error: "Permintaan tidak dibenarkan." });
   }
@@ -61,6 +67,19 @@ export async function onRequestPost({ request, env }) {
 
   if (!env.TURNSTILE_SECRET_KEY) {
     return reply(503, { ok: false, error: "Pengesahan keselamatan belum dikonfigurasi." });
+  }
+
+  if (!env.TURNSTILE_HOSTNAMES) {
+    return reply(503, { ok: false, error: "Hostname keselamatan belum dikonfigurasi." });
+  }
+
+  const allowedHostnames = env.TURNSTILE_HOSTNAMES
+    .split(",")
+    .map((hostname) => hostname.trim().toLowerCase())
+    .filter(Boolean);
+
+  if (!allowedHostnames.length) {
+    return reply(503, { ok: false, error: "Hostname keselamatan belum dikonfigurasi." });
   }
 
   const contentType = request.headers.get("Content-Type") || "";
@@ -131,6 +150,7 @@ export async function onRequestPost({ request, env }) {
       turnstileToken,
       env.TURNSTILE_SECRET_KEY,
       request.headers.get("CF-Connecting-IP"),
+      allowedHostnames,
     );
   } catch {
     return reply(502, { ok: false, error: "Pengesahan keselamatan gagal. Sila cuba semula." });
