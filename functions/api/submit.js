@@ -18,6 +18,10 @@ function cleanText(value, maxLength) {
     .slice(0, maxLength);
 }
 
+function containsSensitiveInfo(value) {
+  return /\b(tac|otp|pin\s*(number|atm|bank)?|kata\s*laluan|password)\b/i.test(value);
+}
+
 function validDate(value) {
   if (!/^\d{4}-\d{2}-\d{2}$/.test(value)) return false;
   const date = new Date(`${value}T00:00:00.000Z`);
@@ -152,6 +156,9 @@ export async function onRequestPost({ request, env }) {
   }
   if (summary.length < 15 || !consent) {
     return reply(400, { ok: false, error: "Ringkasan kes atau persetujuan belum lengkap." });
+  }
+  if (containsSensitiveInfo(summary)) {
+    return reply(400, { ok: false, error: "Jangan masukkan kata laluan, PIN atau kod TAC/OTP dalam ringkasan." });
   }
   if (!turnstileToken) {
     return reply(400, { ok: false, error: "Sila lengkapkan pengesahan keselamatan." });
