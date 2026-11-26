@@ -88,15 +88,28 @@ export async function onRequestPost({ request, env }) {
   }
 
   const length = Number(request.headers.get("Content-Length") || 0);
-  if (length > 16000) {
+  if (Number.isFinite(length) && length > 16000) {
+    return reply(413, { ok: false, error: "Maklumat yang dihantar terlalu besar." });
+  }
+
+  let rawBody;
+  try {
+    rawBody = await request.text();
+  } catch {
+    return reply(400, { ok: false, error: "Data borang tidak sah." });
+  }
+  if (new TextEncoder().encode(rawBody).byteLength > 16000) {
     return reply(413, { ok: false, error: "Maklumat yang dihantar terlalu besar." });
   }
 
   let data;
   try {
-    data = await request.json();
+    data = JSON.parse(rawBody);
   } catch {
     return reply(400, { ok: false, error: "Data borang tidak sah." });
+  }
+  if (!data || typeof data !== "object" || Array.isArray(data)) {
+    return reply(400, { ok: false, error: "Struktur data borang tidak sah." });
   }
 
   const category = cleanText(data.category, 60);
