@@ -81,7 +81,7 @@ Status konfigurasi fail dalam GitHub bukan bukti deployment Cloudflare atau bind
 
 ## Ujian automatik
 
-GitHub Actions menjalankan semakan sintaks Pages Functions, JavaScript sebaris dalam `index.html`, ujian regresi API dan kesahan SQL migration D1 apabila ada push ke `main` atau pull request.
+GitHub Actions menjalankan semakan sintaks Pages Functions, JavaScript sebaris dalam `index.html`, ujian regresi API dan kesahan SQL migration D1 apabila ada push ke `main` atau pull request. `package.json` menetapkan mod ES module untuk ujian Node.js. Fail `_headers` menetapkan header keselamatan untuk respons fail statik; respons API menetapkan header JSON/no-store dan header keselamatan asasnya sendiri.
 
 Ujian API meliputi:
 - penerimaan tarikh semasa mengikut zon waktu Malaysia;
