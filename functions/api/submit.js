@@ -21,7 +21,7 @@ function cleanText(value, maxLength) {
 }
 
 function containsSensitiveInfo(value) {
-  return /\b(?:tac|otp|pin(?:\s*(?:number|atm|bank))?|kata\s*laluan|password)\b\s*(?:[:=]|adalah|ialah)?\s*(?:[0-9]{4,8}|[A-Za-z0-9!@#$%^&*._-]{6,})/i.test(value);
+  return /(?:\b(?:tac|otp|pin(?:\s*(?:number|atm|bank))?|kata\s*laluan|password)\b\s*(?:[:=]\s*|\s+(?:adalah|ialah)\s+)(?:[0-9]{4,8}|[A-Za-z0-9!@#$%^&*._-]{6,})|\b(?:tac|otp|pin(?:\s*(?:number|atm|bank))?|kata\s*laluan|password)\b\s+[0-9]{4,8}\b)/i.test(value);
 }
 
 function validDate(value) {
