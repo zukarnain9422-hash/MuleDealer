@@ -1,0 +1,66 @@
+name: Validate MuleDealer
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Check Pages Functions JavaScript syntax
+        run: |
+          cp functions/api/submit.js /tmp/submit.mjs
+          cp functions/api/health.js /tmp/health.mjs
+          node --check /tmp/submit.mjs
+          node --check /tmp/health.mjs
+
+      - name: Check inline JavaScript in index.html
+        run: |
+          python3 - <<'PY'
+          import re
+          from pathlib import Path
+          html = Path("index.html").read_text(encoding="utf-8")
+          scripts = re.findall(r"<script(?:\\s[^>]*)?>(.*?)</script>", html, re.I | re.S)
+          inline = [s for s in scripts if s.strip()]
+          if not inline:
+              raise SystemExit("No inline JavaScript found")
+          for i, script in enumerate(inline, 1):
+              path = Path(f"/tmp/inline-{i}.mjs")
+              path.write_text(script, encoding="utf-8")
+              print(f"Checking {path}")
+          PY
+          for file in /tmp/inline-*.mjs; do node --check "$file"; done
+
+      - name: Validate D1 migration SQL
+        run: |
+          python3 - <<'PY'
+          import sqlite3
+          from pathlib import Path
+          sql = Path("migrations/0001_initial.sql").read_text(encoding="utf-8")
+          db = sqlite3.connect(":memory:")
+          db.executescript(sql)
+          columns = {row[1] for row in db.execute("PRAGMA table_info(case_submissions)")}
+          required = {
+              "id", "reference_code", "category", "display_name", "contact",
+              "incident_date", "consultation_mode", "preferred_slot", "summary",
+              "consent_at", "status", "created_at", "updated_at"
+          }
+          missing = required - columns
+          if missing:
+              raise SystemExit(f"Missing D1 columns: {sorted(missing)}")
+          print("D1 migration SQL is valid; required columns exist.")
+          PY
