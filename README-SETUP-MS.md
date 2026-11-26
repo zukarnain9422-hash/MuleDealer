@@ -79,8 +79,31 @@ Status konfigurasi fail dalam GitHub bukan bukti deployment Cloudflare atau bind
 - Tambah rate limiting, pemantauan penyalahgunaan dan prosedur tindak balas insiden sebelum penggunaan meluas.
 - Jangan dakwa portal ini mewakili kerajaan, polis, bank atau firma guaman.
 
-## Status semasa
+## Ujian automatik
 
-Kod borang frontend dan endpoint submit telah disambungkan dalam repositori. Pembaikan terkini membuang teks asing yang menyebabkan ralat sintaks di hujung `functions/api/submit.js` dan menyeragamkan awalan nombor rujukan kepada `RND-`.
+GitHub Actions menjalankan semakan sintaks Pages Functions, JavaScript sebaris dalam `index.html`, ujian regresi API dan kesahan SQL migration D1 apabila ada push ke `main` atau pull request.
 
-**Deployment Pages, status migration D1 dan tetapan secret/binding Cloudflare masih perlu disahkan melalui runtime dan Dashboard.**
+Ujian API meliputi:
+- penerimaan tarikh semasa mengikut zon waktu Malaysia;
+- penerangan kes yang menyebut permintaan OTP tanpa mendedahkan kod;
+- penolakan nilai OTP sebenar;
+- penolakan permintaan daripada origin berlainan.
+
+## Had fungsi semasa
+
+- Borang menghantar **permohonan** dan pilihan slot; ia tidak mengesahkan atau mengunci janji temu secara automatik.
+- Belum ada papan pemuka pentadbir, notifikasi e-mel/WhatsApp atau aliran pengurusan status kes.
+- Rekod hanya boleh disemak melalui akses pentadbir D1 yang sah. Jangan bina endpoint awam untuk membaca rekod.
+- Notis privasi belum lengkap. Sebelum penggunaan awam berskala, tetapkan nama dan maklumat pengendali data, tujuan dan asas pemprosesan, pihak yang boleh mengakses data, tempoh simpanan, serta saluran permintaan/pemadaman.
+- Tambah rate limiting, pemantauan penyalahgunaan dan prosedur tindak balas insiden sebelum penggunaan meluas.
+
+## Status deployment
+
+Kod dalam GitHub telah dikemas kini, tetapi ini **bukan bukti** bahawa Cloudflare Pages sudah menerbitkan commit terkini atau bahawa D1 migration, binding dan secret telah aktif dalam Production.
+
+Pengesahan akhir masih memerlukan:
+1. GitHub Actions menunjukkan semua semakan lulus.
+2. `https://muledealer.pages.dev/api/health` menunjukkan API, D1 dan Turnstile dikonfigurasi.
+3. Migration D1 disahkan pada pangkalan data remote.
+4. Satu permohonan ujian menggunakan Turnstile sebenar berjaya disimpan dan boleh disemak dalam D1.
+5. Secret `TURNSTILE_SECRET_KEY` kekal sebagai Pages secret dan tidak pernah berada dalam repositori.
