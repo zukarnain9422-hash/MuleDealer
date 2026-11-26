@@ -25,9 +25,16 @@ function containsSensitiveInfo(value) {
 function validDate(value) {
   if (!/^\d{4}-\d{2}-\d{2}$/.test(value)) return false;
   const date = new Date(`${value}T00:00:00.000Z`);
+  const todayInMalaysia = new Intl.DateTimeFormat("en-CA", {
+    timeZone: "Asia/Kuala_Lumpur",
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+  }).format(new Date());
+
   return !Number.isNaN(date.getTime()) &&
     date.toISOString().slice(0, 10) === value &&
-    value <= new Date().toISOString().slice(0, 10);
+    value <= todayInMalaysia;
 }
 
 async function verifyTurnstile(token, secret, ip, allowedHostnames) {
