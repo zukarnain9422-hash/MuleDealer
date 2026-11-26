@@ -162,7 +162,7 @@ export async function onRequestPost({ request, env }) {
 
   const now = new Date().toISOString();
   const id = crypto.randomUUID();
-  const referenceCode = `MD-${new Date().getUTCFullYear()}-${crypto.randomUUID().slice(0, 8).toUpperCase()}`;
+  const referenceCode = `RND-${new Date().getUTCFullYear()}-${crypto.randomUUID().slice(0, 8).toUpperCase()}`;
 
   try {
     await env.DB.prepare(`
@@ -203,4 +203,3 @@ export async function onRequest(context) {
   }
   return onRequestPost(context);
 }
-Secure Turnstile hostname and action validation.
