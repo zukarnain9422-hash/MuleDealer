@@ -28,6 +28,9 @@ jobs:
           node --check /tmp/submit.mjs
           node --check /tmp/health.mjs
 
+      - name: Run API regression tests
+        run: node --test tests/*.test.mjs
+
       - name: Check inline JavaScript in index.html
         run: |
           python3 - <<'PY'
