@@ -2,12 +2,17 @@ import test from "node:test";
 import assert from "node:assert/strict";
 import { onRequestPost } from "../functions/api/submit.js";
 
-const malaysiaToday = new Intl.DateTimeFormat("en-CA", {
+const malaysiaParts = new Intl.DateTimeFormat("en-GB", {
   timeZone: "Asia/Kuala_Lumpur",
   year: "numeric",
   month: "2-digit",
   day: "2-digit",
-}).format(new Date());
+}).formatToParts(new Date());
+const malaysiaDateValues = Object.fromEntries(
+  malaysiaParts.filter((part) => part.type !== "literal")
+    .map((part) => [part.type, part.value]),
+);
+const malaysiaToday = `${malaysiaDateValues.year}-${malaysiaDateValues.month}-${malaysiaDateValues.day}`;
 
 function makeContext(overrides = {}) {
   let inserted = false;
