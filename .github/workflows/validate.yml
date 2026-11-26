@@ -29,7 +29,7 @@ jobs:
           node --check /tmp/health.mjs
 
       - name: Run API regression tests
-        run: node --test tests/*.test.mjs
+        run: npm test
 
       - name: Check inline JavaScript in index.html
         run: |
