@@ -189,7 +189,8 @@ export async function onRequestPost({ request, env }) {
 
   const now = new Date().toISOString();
   const id = crypto.randomUUID();
-  const referenceCode = `RND-${new Date().getUTCFullYear()}-${crypto.randomUUID().slice(0, 8).toUpperCase()}`;
+  const yearInMalaysia = new Intl.DateTimeFormat("en-CA", { timeZone: "Asia/Kuala_Lumpur", year: "numeric" }).format(new Date());
+  const referenceCode = `RND-${yearInMalaysia}-${crypto.randomUUID().slice(0, 8).toUpperCase()}`;
 
   try {
     await env.DB.prepare(`
