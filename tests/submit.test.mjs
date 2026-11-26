@@ -67,7 +67,7 @@ test("accepts a Malaysian local current date and a safe scam description", async
     const result = await response.json();
     assert.equal(response.status, 201);
     assert.equal(result.ok, true);
-    assert.match(result.referenceCode, /^RND-\\d{4}-[A-F0-9]{8}$/);
+    assert.match(result.referenceCode, /^RND-\d{4}-[A-F0-9]{8}$/);
     assert.equal(fixture.wasInserted(), true);
   } finally {
     globalThis.fetch = originalFetch;
