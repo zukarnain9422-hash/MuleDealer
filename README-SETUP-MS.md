@@ -1,43 +1,47 @@
-# MuleDealer — Setup Cloudflare (asas)
+# MuleDealer — Panduan Setup dan Status
 
-Pakej ini menyediakan asas backend untuk repositori MuleDealer. Ia **belum mengubah `index.html`** dan borang sedia ada belum disambungkan ke API. Jangan umumkan borang aktif sehingga integrasi frontend dan ujian selesai.
+MuleDealer ialah portal penerimaan maklumat awal berkaitan mangsa penipuan dan kes keldai akaun. Portal ini bukan agensi penguat kuasa, bank atau firma guaman.
 
-## Struktur
+## Struktur projek
 
 ```text
 MuleDealer/
+├── index.html
 ├── functions/
 │   └── api/
 │       ├── health.js
 │       └── submit.js
 ├── migrations/
 │   └── 0001_initial.sql
-├── .dev.vars.example
-├── .gitignore
 └── wrangler.toml
 ```
 
-## 1. Buat pangkalan data D1
+## Konfigurasi dalam repositori
 
-Dalam Termux atau komputer yang mempunyai Node.js:
+- Cloudflare Pages project: `muledealer`
+- Output directory: `.`
+- Pages Functions: folder `functions/` di root
+- D1 binding: `DB`
+- D1 database: `muledealer-db`
+- Turnstile hostname yang dibenarkan: `muledealer.pages.dev`
+- Turnstile Site Key disimpan dalam konfigurasi awam; Secret Key mesti disimpan sebagai Pages secret `TURNSTILE_SECRET_KEY`.
 
-```bash
-npm install -g wrangler
-wrangler login
-wrangler d1 create muledealer-db
-```
+Semak Dashboard Cloudflare untuk mengesahkan binding dan secret pada environment Production dan Preview. Jangan letakkan Secret Key dalam HTML, JavaScript atau repositori.
 
-Simpan `database_id` yang dipaparkan. Buka `wrangler.toml` dan gantikan:
+## Borang dan API
 
-```toml
-database_id = "REPLACE_WITH_D1_DATABASE_ID"
-```
+Borang dalam `index.html` sudah menghantar JSON ke `POST /api/submit` dan menyertakan token Turnstile. API menyemak medan, persetujuan, tarikh kejadian dan pengesahan Turnstile di bahagian server sebelum menyimpan rekod ke D1.
 
-dengan ID sebenar. Jangan reka atau kongsi ID pangkalan data secara terbuka.
+Endpoint:
 
-## 2. Pasang skema pangkalan data
+- `GET /api/health` — status API dan kewujudan binding/konfigurasi.
+- `POST /api/submit` — penerimaan permohonan. Memerlukan token Turnstile yang sah.
 
-Dari direktori root projek:
+Nombor rujukan dijana dengan format `RND-YYYY-XXXXXXXX`. Ia hanya dipaparkan selepas API berjaya menyimpan permohonan.
+
+## D1 migration
+
+Skema awal berada di `migrations/0001_initial.sql`. Pastikan migration telah digunakan pada pangkalan data remote:
 
 ```bash
 wrangler d1 migrations apply muledealer-db --remote
@@ -49,77 +53,34 @@ Semak jadual:
 wrangler d1 execute muledealer-db --remote --command="SELECT name FROM sqlite_master WHERE type='table';"
 ```
 
-## 3. Daftar Turnstile
+Jangan jalankan migration secara membuta tuli pada pangkalan data produksi; semak status migration terlebih dahulu.
 
-Dalam Cloudflare Dashboard:
+## Semakan deployment
 
-1. Buka Turnstile dan tambah widget.
-2. Tetapkan hostname domain MuleDealer yang sebenar.
-3. Pilih mod Managed.
-4. Salin Site Key dan Secret Key.
+Selepas commit ke branch `main`, Cloudflare Pages sepatutnya memulakan deployment automatik jika integrasi Git dan Production branch dikonfigurasi dengan betul.
 
-Masukkan Site Key dalam `wrangler.toml` pada `TURNSTILE_SITE_KEY`.
-Tetapkan Secret Key sebagai rahsia (bukan variable awam):
+Uji:
 
-```bash
-wrangler pages secret put TURNSTILE_SECRET_KEY --project-name muledealer
-```
+1. Buka laman utama `https://muledealer.pages.dev`.
+2. Buka `https://muledealer.pages.dev/api/health`.
+3. Pastikan respons health menunjukkan `ok: true`, `databaseConfigured: true` dan `turnstileConfigured: true`.
+4. Hantar satu permohonan ujian yang dibenarkan dan sahkan respons HTTP 201 serta nombor rujukan.
+5. Semak rekod masuk ke D1 menggunakan akses pentadbir yang sah. Jangan gunakan maklumat mangsa sebenar untuk ujian.
 
-Masukkan Secret Key apabila terminal meminta nilainya. Jangan masukkan Secret Key ke HTML, JavaScript, GitHub atau mesej awam.
+Status konfigurasi fail dalam GitHub bukan bukti deployment Cloudflare atau binding akaun telah berjaya. Pengesahan runtime perlu dibuat pada URL produksi.
 
-Untuk ujian setempat, salin `.dev.vars.example` kepada `.dev.vars` dan isi Secret Key. Fail `.dev.vars` dikecualikan daripada Git.
-
-## 4. Tetapan Cloudflare Pages
-
-Pastikan projek Pages disambungkan kepada repositori GitHub yang betul.
-
-Cadangan tetapan:
-- Framework preset: None
-- Build command: kosong (tiada build diperlukan untuk struktur HTML sedia ada)
-- Build output directory: `.` mengikut `wrangler.toml`
-- Root directory: `/`
-
-Pages Functions mesti berada dalam folder `functions/` di root projek, bukan di dalam folder output `dist`.
-
-Jika projek Pages sedia ada mempunyai tetapan build atau konfigurasi Wrangler tersendiri, semak dahulu sebelum menggantikannya. Jangan timpa konfigurasi deployment sedia ada tanpa membandingkannya.
-
-## 5. Bindings
-
-Konfigurasi `wrangler.toml` menggunakan binding D1 bernama `DB`.
-Jika Dashboard Pages mengurus binding secara berasingan, buka:
-
-Workers & Pages → MuleDealer → Settings → Bindings → D1 database
-
-Pilih pangkalan data `muledealer-db`, dan tetapkan variable name `DB`. Redeploy selepas perubahan binding.
-
-## 6. Uji API
-
-Selepas deploy:
-
-- `GET /api/health` memaparkan status API dan sama ada binding/konfigurasi telah tersedia.
-- `POST /api/submit` menerima JSON, mengesahkan Turnstile di server, menyemak medan dan menyimpan permohonan ke D1.
-
-Endpoint submit memerlukan token Turnstile yang sah. Ia tidak akan menerima permohonan jika rahsia Turnstile atau D1 belum dikonfigurasi.
-
-## 7. Perkara belum siap sebelum penggunaan sebenar
-
-1. Sambungkan widget Turnstile pada borang `index.html` menggunakan Site Key.
-2. Tukar handler submit frontend supaya `fetch('/api/submit', ...)` menghantar medan yang tepat dan token Turnstile.
-3. Paparkan nombor rujukan hanya selepas API membalas HTTP 201.
-4. Bina panel admin dengan pengesahan yang kukuh, peranan akses dan audit log.
-5. Tetapkan dasar privasi, tempoh simpanan/pemadaman, proses permintaan subjek data dan prosedur insiden.
-6. Tambah perlindungan kadar permintaan dan pemantauan penyalahgunaan.
-7. Uji di Preview terlebih dahulu; jangan uji data palsu pada pangkalan data produksi.
-
-## Keselamatan data
+## Keselamatan dan privasi
 
 - Jangan minta atau simpan kata laluan bank, PIN, TAC/OTP, nombor kad penuh atau akses perbankan.
-- Hadkan akses D1 kepada akaun pentadbir yang diberi kuasa.
-- Jangan paparkan rekod aduan melalui endpoint awam.
-- Output daripada pangkalan data mesti di-escape apabila dipaparkan pada panel admin.
-- Data hubungan dan ringkasan kes boleh mengandungi maklumat peribadi; hadkan pengumpulan kepada perkara yang benar-benar perlu.
-- Jangan dakwa portal ini agensi kerajaan, bank, polis atau firma guaman melainkan status tersebut benar dan boleh dibuktikan.
+- Hadkan akses D1 kepada pentadbir yang diberi kuasa.
+- Jangan sediakan endpoint awam untuk membaca rekod aduan.
+- Lindungi paparan data dengan kawalan akses, output escaping dan audit log.
+- Tetapkan notis privasi, tujuan pemprosesan, tempoh simpanan/pemadaman dan saluran permintaan data.
+- Tambah rate limiting, pemantauan penyalahgunaan dan prosedur tindak balas insiden sebelum penggunaan meluas.
+- Jangan dakwa portal ini mewakili kerajaan, polis, bank atau firma guaman.
 
-## Status pakej
+## Status semasa
 
-Pakej ini ialah asas konfigurasi backend. Ia bukan bukti bahawa D1, Turnstile atau Pages sudah diwujudkan di akaun Cloudflare. ID D1, hostname Turnstile, rahsia dan binding perlu ditetapkan dalam akaun pemilik projek.
+Kod borang frontend dan endpoint submit telah disambungkan dalam repositori. Pembaikan terkini membuang teks asing yang menyebabkan ralat sintaks di hujung `functions/api/submit.js` dan menyeragamkan awalan nombor rujukan kepada `RND-`.
+
+**Deployment Pages, status migration D1 dan tetapan secret/binding Cloudflare masih perlu disahkan melalui runtime dan Dashboard.**
